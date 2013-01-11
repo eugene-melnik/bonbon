@@ -5,5 +5,5 @@
 
 #define MAIN_WINDOW_NAME        "main_window"
 
-#endif //BONBON_H_INCLUDED
+#endif // BONBON_H_INCLUDED
 

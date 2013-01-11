@@ -1,4 +1,5 @@
 #include "bonbon.h"
+#include "connection.h"
 
 #include <gtk/gtk.h>
 #include <stdlib.h>
