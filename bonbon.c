@@ -20,10 +20,11 @@ int main(int argc, char * argv[])
         return EXIT_FAILURE;
     }
 
-    GtkWidget * main_window = GTK_WIDGET(gtk_builder_get_object(builder, "main_window"));
+    GtkWidget * main_window = GTK_WIDGET(gtk_builder_get_object(builder, MAIN_WINDOW_NAME));
 
     /* Starting */
 
+    gtk_builder_connect_signals(builder, NULL);
     g_object_unref(G_OBJECT(builder));
     gtk_widget_show_all(main_window);
     gtk_main();
