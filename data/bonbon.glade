@@ -9,7 +9,7 @@
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
     <property name="program_name">Bonbon</property>
-    <property name="version">0.1</property>
+    <property name="version">0.2</property>
     <property name="comments" translatable="yes">Remote control through ssh.</property>
     <property name="website">https://github.com/jeka-js/bonbon</property>
     <property name="website_label" translatable="yes">Sources on github</property>
@@ -43,8 +43,8 @@
     </child>
   </object>
   <object class="GtkWindow" id="main_window">
-    <property name="width_request">400</property>
-    <property name="height_request">250</property>
+    <property name="width_request">450</property>
+    <property name="height_request">300</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Bonbon!</property>
     <property name="icon_name">network-workgroup</property>
@@ -151,6 +151,7 @@
               <object class="GtkBox" id="connection_main_box">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkBox" id="box_Hostname">
@@ -254,6 +255,7 @@
                         <property name="can_focus">True</property>
                         <property name="margin_left">10</property>
                         <property name="margin_right">10</property>
+                        <property name="visibility">False</property>
                         <property name="invisible_char">•</property>
                       </object>
                       <packing>
@@ -328,6 +330,171 @@
                 <property name="tab_fill">False</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkBox" id="box_Keyboard">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkBox" id="subbox1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="l_Multiple_keys">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xpad">20</property>
+                        <property name="ypad">10</property>
+                        <property name="label" translatable="yes">Multiple keys:</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="combo_Key1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="border_width">5</property>
+                        <property name="entry_text_column">0</property>
+                        <property name="id_column">1</property>
+                        <items>
+                          <item translatable="yes">-</item>
+                          <item translatable="yes">ctrl</item>
+                          <item translatable="yes">alt</item>
+                          <item translatable="yes">shift</item>
+                          <item translatable="yes">super</item>
+                        </items>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="l_Plus1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xpad">2</property>
+                        <property name="label" translatable="yes">+</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="combo_Key2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="border_width">5</property>
+                        <property name="entry_text_column">0</property>
+                        <property name="id_column">1</property>
+                        <items>
+                          <item translatable="yes">-</item>
+                          <item translatable="yes">ctrl</item>
+                          <item translatable="yes">alt</item>
+                          <item translatable="yes">shift</item>
+                          <item translatable="yes">super</item>
+                        </items>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="l_Plus2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xpad">2</property>
+                        <property name="label" translatable="yes">+</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_left">5</property>
+                        <property name="max_length">10</property>
+                        <property name="invisible_char">•</property>
+                        <property name="width_chars">11</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_Send1">
+                        <property name="label" translatable="yes">Send</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">6</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="l_Keyboard">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Keyboard</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -384,33 +551,6 @@
               <packing>
                 <property name="x">20</property>
                 <property name="y">20</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSpinner" id="spinner1">
-                <property name="width_request">100</property>
-                <property name="height_request">80</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="active">True</property>
-              </object>
-              <packing>
-                <property name="x">116</property>
-                <property name="y">67</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkScale" id="scale1">
-                <property name="width_request">125</property>
-                <property name="height_request">109</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="round_digits">1</property>
-                <property name="digits">0</property>
-              </object>
-              <packing>
-                <property name="x">280</property>
-                <property name="y">48</property>
               </packing>
             </child>
           </object>

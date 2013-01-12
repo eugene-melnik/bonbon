@@ -1,12 +1,14 @@
 #include "connection.h"
 
+#include <stdlib.h>
+
 int open_connection(char * hostname, char * username, char * password)
 {
-    return 0;
+    return CONNECTION_SUCCESS;
 }
 
 int close_connection()
 {
-    return 0;
+    return CONNECTION_SUCCESS;
 }
 
