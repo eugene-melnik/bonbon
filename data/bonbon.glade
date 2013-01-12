@@ -9,7 +9,7 @@
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
     <property name="program_name">Bonbon</property>
-    <property name="version">0.2</property>
+    <property name="version">0.3</property>
     <property name="comments" translatable="yes">Remote control through ssh.</property>
     <property name="website">https://github.com/jeka-js/bonbon</property>
     <property name="website_label" translatable="yes">Sources on github</property>
@@ -42,11 +42,26 @@
       </object>
     </child>
   </object>
+  <object class="GtkEntryBuffer" id="buffer_Hostname">
+    <property name="max_length">50</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Key3">
+    <property name="max_length">1000</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Key_sequence">
+    <property name="max_length">10</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Password">
+    <property name="max_length">50</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Username">
+    <property name="max_length">50</property>
+  </object>
   <object class="GtkWindow" id="main_window">
     <property name="width_request">450</property>
     <property name="height_request">300</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Bonbon!</property>
+    <property name="title" translatable="yes">Bonbon v0.3</property>
     <property name="icon_name">network-workgroup</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
@@ -177,7 +192,10 @@
                         <property name="can_focus">True</property>
                         <property name="margin_left">10</property>
                         <property name="margin_right">10</property>
+                        <property name="buffer">buffer_Hostname</property>
+                        <property name="max_length">50</property>
                         <property name="invisible_char">•</property>
+                        <property name="truncate_multiline">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -216,7 +234,10 @@
                         <property name="can_focus">True</property>
                         <property name="margin_left">10</property>
                         <property name="margin_right">10</property>
+                        <property name="buffer">buffer_Username</property>
+                        <property name="max_length">50</property>
                         <property name="invisible_char">•</property>
+                        <property name="truncate_multiline">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -255,8 +276,11 @@
                         <property name="can_focus">True</property>
                         <property name="margin_left">10</property>
                         <property name="margin_right">10</property>
+                        <property name="buffer">buffer_Password</property>
+                        <property name="max_length">50</property>
                         <property name="visibility">False</property>
-                        <property name="invisible_char">•</property>
+                        <property name="invisible_char">#</property>
+                        <property name="truncate_multiline">True</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -358,6 +382,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="border_width">5</property>
+                        <property name="active">1</property>
                         <property name="entry_text_column">0</property>
                         <property name="id_column">1</property>
                         <items>
@@ -366,6 +391,8 @@
                           <item translatable="yes">alt</item>
                           <item translatable="yes">shift</item>
                           <item translatable="yes">super</item>
+                          <item translatable="yes">Return</item>
+                          <item translatable="yes">BS</item>
                         </items>
                       </object>
                       <packing>
@@ -392,6 +419,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="border_width">5</property>
+                        <property name="active">1</property>
                         <property name="entry_text_column">0</property>
                         <property name="id_column">1</property>
                         <items>
@@ -400,6 +428,8 @@
                           <item translatable="yes">alt</item>
                           <item translatable="yes">shift</item>
                           <item translatable="yes">super</item>
+                          <item translatable="yes">Return</item>
+                          <item translatable="yes">BS</item>
                         </items>
                       </object>
                       <packing>
@@ -422,16 +452,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="entry1">
+                      <object class="GtkEntry" id="entry_Key3">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_left">5</property>
+                        <property name="margin_right">5</property>
+                        <property name="buffer">buffer_Key3</property>
                         <property name="max_length">10</property>
                         <property name="invisible_char">•</property>
                         <property name="width_chars">11</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">5</property>
                       </packing>
@@ -447,7 +479,7 @@
                         <property name="use_action_appearance">False</property>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">6</property>
                       </packing>
@@ -460,14 +492,54 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="box2">
+                  <object class="GtkBox" id="subbox2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="l_Key_sequence">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xpad">20</property>
+                        <property name="ypad">10</property>
+                        <property name="label" translatable="yes">Key sequence:</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkEntry" id="entry_Key_sequence">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="margin_left">5</property>
+                        <property name="margin_right">5</property>
+                        <property name="buffer">buffer_Key_sequence</property>
+                        <property name="max_length">1000</property>
+                        <property name="invisible_char">•</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_Send2">
+                        <property name="label" translatable="yes">Send</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -477,7 +549,64 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkBox" id="box1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="l_Grab_keyboard">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xpad">20</property>
+                        <property name="ypad">10</property>
+                        <property name="label" translatable="yes">Grab keyboard</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="toggle_Grab_keyboard">
+                        <property name="label" translatable="yes">Grab!</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="margin_left">50</property>
+                        <property name="margin_right">50</property>
+                        <property name="margin_top">2</property>
+                        <property name="margin_bottom">2</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTextView" id="text_view">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="wrap_mode">word</property>
+                    <property name="left_margin">1</property>
+                    <property name="right_margin">1</property>
+                    <property name="indent">5</property>
+                    <property name="buffer">text_buffer</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -534,25 +663,6 @@
             <property name="height_request">200</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkCheckButton" id="chk_b">
-                <property name="label">gtk-floppy</property>
-                <property name="use_action_appearance">False</property>
-                <property name="width_request">100</property>
-                <property name="height_request">30</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_stock">True</property>
-                <property name="xalign">0</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="x">20</property>
-                <property name="y">20</property>
-              </packing>
-            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -583,4 +693,5 @@
       </object>
     </child>
   </object>
+  <object class="GtkTextBuffer" id="text_buffer"/>
 </interface>

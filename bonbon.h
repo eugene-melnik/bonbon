@@ -4,6 +4,7 @@
 /* Files */
 
 #define GLADE_FILE_NAME         "./data/bonbon.glade"
+#define CONFIG_FILE_NAME        "./data/bonbon.conf"
 
 /* Objects (in XML) */
 
@@ -22,6 +23,8 @@
 #define CONNECTED_MESSAGE       "Connected."
 #define DISCONNECTED_MESSAGE    "Disconnected."
 #define SOME_ERROR_MESSAGE      "Oops! There is some error here! :)"
+
+#define THREAD_STACK_SIZE       5 * 1024 // 5KiB
 
 #endif // BONBON_H_INCLUDED
 

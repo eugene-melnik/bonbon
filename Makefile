@@ -1,4 +1,4 @@
-VERSION = 0.2
+VERSION = 0.3
 
 CC = gcc
 RM = rm -f
