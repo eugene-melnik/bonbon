@@ -1,5 +1,6 @@
 #include "bonbon.h"
 #include "connection.h"
+#include "page_shell.h"
 
 #include <gtk/gtk.h>
 #include <pthread.h>
