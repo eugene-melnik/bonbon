@@ -7,20 +7,23 @@
 FILE * open_connection(char * hostname, char * username, char * password)
 {
     char * command = (char *) malloc(COMMAND_BUFFER_SIZE);
-    sprintf(command, "ssh -T %s@%s\n", username, hostname);
+    sprintf(command, "ssh -TX %s@%s\n", username, hostname);
     FILE * pipe = popen(command, "w");
 
+    //fputs(password, pipe);
+
     sleep(1);
 
-    fread(command, sizeof(char), COMMAND_BUFFER_SIZE, pipe);
+    fgets(command, COMMAND_BUFFER_SIZE, pipe);
     printf("%s\n", command);
 
+    //fputs("DISPLAY=:0.0 xdotool key ctrl+alt+Delete\n", pipe);
+    fputs("cheese\n", pipe);
+
     sleep(1);
 
-    if (password != NULL)
-    {
-        fwrite(password, 1, strlen(password), pipe);
-    }
+    fgets(command, COMMAND_BUFFER_SIZE, pipe);
+    printf("%s\n", command);
 
     free(command);
     return pipe;
@@ -29,13 +32,22 @@ FILE * open_connection(char * hostname, char * username, char * password)
 void close_connection(FILE * pipe)
 {
     const char * command = "exit";
-    fwrite(command, sizeof(char), strlen(command), pipe);
-    printf("\n");
+    fputs(command, pipe);
+
+    char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
+    fgets(com, COMMAND_BUFFER_SIZE, pipe);
+    printf("%s\n", com);
+    free(com);
+
     pclose(pipe);
 }
 
-char * execute_command(const char * command)
+char * execute_command(FILE * pipe, const char * command)
 {
-    return NULL;
+    char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
+    fputs(command, pipe);
+    fgets(com, COMMAND_BUFFER_SIZE, pipe);
+
+    return com;
 }
 

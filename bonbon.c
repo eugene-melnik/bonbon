@@ -1,4 +1,5 @@
 #include "bonbon.h"
+#include "funcs.h"
 #include "connection.h"
 #include "page_shell.h"
 
@@ -31,9 +32,6 @@ static struct global_t {
 static void on_create(GtkWindow *, gpointer);
 static void on_destroy(GtkWindow *, gpointer);
 static void b_Connect_clicked(GtkButton *, GtkBox *);
-static void entry_edited(GtkEntry *, char **);
-
-int remove_children(GtkContainer *);
 
 void * connect_thread(void *);
 
@@ -70,9 +68,9 @@ int main(int argc, char * argv[])
     global.resultbox = GTK_BOX(gtk_builder_get_object(builder, BOX_RESULT_NAME));
     global.statusbar = GTK_STATUSBAR(gtk_builder_get_object(builder, STATUSBAR_NAME));
 
-    /* Signals */
+    page_shell_bind(builder);
 
-    gtk_builder_connect_signals(builder, NULL);
+    /* Signals */
 
     g_signal_connect(main_window, "show", G_CALLBACK(on_create), NULL);
     g_signal_connect(main_window, "destroy", G_CALLBACK(on_destroy), NULL);
@@ -82,6 +80,8 @@ int main(int argc, char * argv[])
     g_signal_connect(e_Hostname, "changed", G_CALLBACK(entry_edited), &global.hostname);
     g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), &global.username);
     g_signal_connect(e_Password, "changed", G_CALLBACK(entry_edited), &global.password);
+
+    gtk_builder_connect_signals(builder, NULL);
 
     /* Starting */
 
@@ -148,44 +148,6 @@ static void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
     pthread_attr_init(&attr);
     pthread_attr_setstacksize(&attr, THREAD_STACK_SIZE);
     pthread_create(&tid, &attr, connect_thread, (void *) button);
-}
-
-/*****************************************************************************
- *  Entries handler ("Hostame", "Username", "Password")                       *
-  *****************************************************************************/
-
-static void entry_edited(GtkEntry * entry, char ** string)
-{
-    if (*string != NULL)
-    {
-        free(*string);
-    }
-
-    GtkEntryBuffer * entry_buffer = gtk_entry_get_buffer(entry);
-    *string = strdup(gtk_entry_buffer_get_text(entry_buffer));
-}
-
-/*****************************************************************************
- *  Remove all child widgets in GtkContainer                                  *
-  *****************************************************************************/
-
-int remove_children(GtkContainer * container)
-{
-    GList * children = gtk_container_get_children(GTK_CONTAINER(container));
-
-    if (children != NULL)
-    {
-        GList * iterator;
-
-        for (iterator = children; iterator != NULL; iterator = g_list_next(iterator))
-        {
-            gtk_widget_destroy(GTK_WIDGET(iterator->data));
-        }
-
-        g_list_free(children);
-    }
-
-    return EXIT_SUCCESS;
 }
 
 /*****************************************************************************
