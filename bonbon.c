@@ -1,12 +1,11 @@
-#include "bonbon.h"
-#include "funcs.h"
-#include "connection.h"
 #include "page_connection.h"
 #include "page_keyboard.h"
 #include "page_shell.h"
+#include "connection.h"
+#include "bonbon.h"
+#include "funcs.h"
 
 #include <gtk/gtk.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,7 +38,6 @@ int main(int argc, char * argv[])
 
     /* Starting */
 
-    gtk_widget_show_all(GTK_WIDGET(global.main_window));
     g_object_unref(G_OBJECT(builder));
     show_in_statusbar(READY_MESSAGE);
     gtk_main();

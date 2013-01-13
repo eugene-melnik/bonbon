@@ -20,6 +20,13 @@
 #define CONNECTED_MESSAGE       "Connected."
 #define DISCONNECTED_MESSAGE    "Disconnected."
 
+#define STATUS_EMPTY_FIELDS     "Status:\nEmpty field(s)!"
+#define STATUS_CONNECTED        "Status:\nConnected"
+#define STATUS_DISCONNECTED     "Status:\nDisconnected"
+#define STATUS_ERROR            "Status:\nError!!!"
+
+/* Handlers */
+
 int page_connection_bind(GtkBuilder *);
 
 void on_create(GtkWindow *, gpointer);

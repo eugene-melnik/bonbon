@@ -1,4 +1,5 @@
 #include "connection.h"
+#include "funcs.h"
 
 #include <unistd.h>
 #include <stdlib.h>

@@ -13,7 +13,8 @@
 
 /* Global constants */
 
-#define THREAD_STACK_SIZE       64 * 1024 // 64KiB
+#define COMMAND_BUFFER_SIZE     2 * 1024 * sizeof(char)  // 2KiB
+#define THREAD_STACK_SIZE       64 * 1024  // 64KiB
 
 /* Global variables */
 
@@ -25,15 +26,13 @@ typedef struct global_t {
     int auto_connect;
     int is_connected;
     int save_login_data;
-    GtkWindow * main_window;
     GtkStatusbar * statusbar;
-    GtkBox * resultbox;
     GError * error_msg;
 } global_t;
 
 global_t global;
 
-/* Functions */
+/* Global functions */
 
 void show_in_statusbar(const char *);
 void entry_edited(GtkEntry *, char **);

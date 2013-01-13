@@ -6,10 +6,13 @@ char * string;
 
 int page_shell_bind(GtkBuilder * builder)
 {
+    /* Objects */
+
     GtkWidget * e_Shell = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_COMMAND_NAME));
     GtkWidget * b_Execute = GTK_WIDGET(gtk_builder_get_object(builder, BUTTON_EXECUTE_NAME));
-
     GtkTextBuffer * text_buffer_Shell = GTK_TEXT_BUFFER(gtk_builder_get_object(builder, TEXT_BUFFER_SHELL_NAME));
+
+    /* Signals */
 
     g_signal_connect(e_Shell, "changed", G_CALLBACK(entry_edited), &string);
     g_signal_connect(e_Shell, "activate", G_CALLBACK(b_Execute_clicked), text_buffer_Shell);
@@ -29,7 +32,8 @@ void b_Execute_clicked(GtkButton * button, GtkTextBuffer * buffer)
     }
     else
     {
-        gtk_text_buffer_insert(buffer, &iter, "Not Connected!!!\n", -1);
+        gtk_text_buffer_insert(buffer, &iter, OFFLINE_MESSAGE, -1);
+        show_in_statusbar(OFFLINE_MESSAGE);
     }
 }
 
