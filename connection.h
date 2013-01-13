@@ -11,5 +11,7 @@
 FILE * open_connection(char *, char *, char *);
 void close_connection(FILE *);
 
+char * execute_command(const char *);
+
 #endif // CONNECTION_H_INCLUDED
 
