@@ -1,9 +1,9 @@
-#ifndef PAGE_SHELL_H_INCLUDED
-#define PAGE_SHELL_H_INCLUDED
+#ifndef PAGE_KEYBOARD_H_INCLUDED
+#define PAGE_KEYBOARD_H_INCLUDED
 
 #include <gtk/gtk.h>
 
 int page_keyboard_bind(GtkBuilder *);
 
-#endif // PAGE_SHELL_H_INCLUDED
+#endif // PAGE_KEYBOARD_H_INCLUDED
 

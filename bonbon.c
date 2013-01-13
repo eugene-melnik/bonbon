@@ -1,6 +1,8 @@
 #include "bonbon.h"
 #include "funcs.h"
 #include "connection.h"
+#include "page_connection.h"
+#include "page_keyboard.h"
 #include "page_shell.h"
 
 #include <gtk/gtk.h>
@@ -12,18 +14,7 @@
  *  Global variables                                                          *
   *****************************************************************************/
 
-static struct global_t {
-    char * hostname;
-    char * username;
-    char * password;
-    FILE * main_pipe;
-    int auto_connect;
-    int is_connected;
-    int save_login_data;
-    GtkStatusbar * statusbar;
-    GtkBox * resultbox;
-    GError * error_msg;
-} global;
+static global_t global;
 
 /*****************************************************************************
  *  Global handlers, functions and threads                                    *
@@ -68,15 +59,15 @@ int main(int argc, char * argv[])
     global.resultbox = GTK_BOX(gtk_builder_get_object(builder, BOX_RESULT_NAME));
     global.statusbar = GTK_STATUSBAR(gtk_builder_get_object(builder, STATUSBAR_NAME));
 
+    page_connection_bind(builder);
+    page_keyboard_bind(builder);
     page_shell_bind(builder);
 
     /* Signals */
 
     g_signal_connect(main_window, "show", G_CALLBACK(on_create), NULL);
     g_signal_connect(main_window, "destroy", G_CALLBACK(on_destroy), NULL);
-
     g_signal_connect(b_Connect, "clicked", G_CALLBACK(b_Connect_clicked), global.resultbox);
-
     g_signal_connect(e_Hostname, "changed", G_CALLBACK(entry_edited), &global.hostname);
     g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), &global.username);
     g_signal_connect(e_Password, "changed", G_CALLBACK(entry_edited), &global.password);

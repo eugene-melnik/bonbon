@@ -1,11 +1,11 @@
 #include "page_shell.h"
 #include "funcs.h"
 
+static global_t global;
 char * string;
 
 int page_shell_bind(GtkBuilder * builder)
 {
-    //GtkWidget * l_Access = GTK_WIDGET(gtk_builder_get_object(builder, LABEL_ACCESS_NAME));
     GtkWidget * e_Shell = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_COMMAND_NAME));
     GtkWidget * b_Execute = GTK_WIDGET(gtk_builder_get_object(builder, BUTTON_EXECUTE_NAME));
 
@@ -22,6 +22,14 @@ void b_Execute_clicked(GtkButton * button, GtkTextBuffer * buffer)
 {
     GtkTextIter iter;
     gtk_text_buffer_get_end_iter(buffer, &iter);
-    gtk_text_buffer_insert(buffer, &iter, string, -1);
+
+    if (global.is_connected)
+    {
+        gtk_text_buffer_insert(buffer, &iter, string, -1);
+    }
+    else
+    {
+        gtk_text_buffer_insert(buffer, &iter, "Not Connected!!!\n", -1);
+    }
 }
 

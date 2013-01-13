@@ -7,21 +7,15 @@
 FILE * open_connection(char * hostname, char * username, char * password)
 {
     char * command = (char *) malloc(COMMAND_BUFFER_SIZE);
-    sprintf(command, "ssh -T eugene@pentagon-3 > /dev/null\n");
+    sprintf(command, "ssh -T %s@%s > /dev/null\n", username, hostname);
     FILE * pipe = popen(command, "w");
-    sleep(2);
 
-    fputs("DISPLAY=:0.0 xterm &\n", pipe);
-    fflush(pipe);
-    sleep(2);
-
-    fputs("killall xterm\n", pipe);
-    fflush(pipe);
-
-    //fgets(command, COMMAND_BUFFER_SIZE, pipe);
-    //printf("%s\n", command);
-
-    //fputs("DISPLAY=:0.0 xdotool key ctrl+alt+Delete\n", pipe);
+    if (password != NULL)
+    {
+        sleep(2);
+        fputs(password, pipe);
+        fflush(pipe);
+    }
 
     free(command);
     return pipe;

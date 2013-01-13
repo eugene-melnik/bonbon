@@ -28,7 +28,7 @@
 #define DISCONNECTED_MESSAGE    "Disconnected."
 #define SOME_ERROR_MESSAGE      "Oops! There is some error here! :)"
 
-#define THREAD_STACK_SIZE       128 * 1024 // 128KiB
+#define THREAD_STACK_SIZE       64 * 1024 // 64KiB
 
 #endif // BONBON_H_INCLUDED
 
