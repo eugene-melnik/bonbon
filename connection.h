@@ -1,11 +1,15 @@
 #ifndef CONNECTION_H_INCLUDED
 #define CONNECTION_H_INCLUDED
 
+#include <stdio.h>
+
 #define CONNECTION_ERROR   0
 #define CONNECTION_SUCCESS 1
 
-int open_connection(char *, char *, char *);
-int close_connection();
+#define COMMAND_BUFFER_SIZE     1024 * sizeof(char)
+
+FILE * open_connection(char *, char *, char *);
+void close_connection(FILE *);
 
 #endif // CONNECTION_H_INCLUDED
 

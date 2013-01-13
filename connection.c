@@ -1,24 +1,20 @@
 #include "connection.h"
 
-#include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-int open_connection(char * hostname, char * username, char * password)
+FILE * open_connection(char * hostname, char * username, char * password)
 {
-    printf("opening connection...\n");
-    sleep(3);
-    printf("ok!\n");
+    char * command = (char *) malloc(COMMAND_BUFFER_SIZE);
+    sprintf(command, "ssh %s@%s", username, hostname);
 
-    return CONNECTION_SUCCESS;
+    FILE * pipe = popen(command, "rw");
+
+    free(command);
+    return pipe;
 }
 
-int close_connection()
+void close_connection(FILE * pipe)
 {
-    printf("closing connection...\n");
-    sleep(3);
-    printf("ok!\n");
-
-    return CONNECTION_SUCCESS;
+    pclose(pipe);
 }
 

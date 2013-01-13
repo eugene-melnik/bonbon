@@ -12,6 +12,9 @@
 #define CONNECT_BUTTON_NAME     "b_Connect"
 #define BOX_RESULT_NAME         "box_Result"
 #define STATUSBAR_NAME          "statusbar"
+#define ENTRY_HOSTNAME_NAME     "e_Hostname"
+#define ENTRY_USERNAME_NAME     "e_Username"
+#define ENTRY_PASSWORD_NAME     "e_Password"
 
 /* Statusbar messages */
 
@@ -20,11 +23,12 @@
 #define ERROR_MESSAGE_ID        2
 
 #define READY_MESSAGE           "Ready to party!"
+#define INCORRECT_DATA_MESSAGE  "Incorrect data!"
 #define CONNECTED_MESSAGE       "Connected."
 #define DISCONNECTED_MESSAGE    "Disconnected."
 #define SOME_ERROR_MESSAGE      "Oops! There is some error here! :)"
 
-#define THREAD_STACK_SIZE       5 * 1024 // 5KiB
+#define THREAD_STACK_SIZE       64 * 1024 // 64KiB
 
 #endif // BONBON_H_INCLUDED
 

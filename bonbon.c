@@ -10,18 +10,27 @@
  *  Global variables                                                          *
   *****************************************************************************/
 
-static GtkWidget * statusbar;
-static char * hostname = NULL;
-static char * username = NULL;
-static char * password = NULL;
-static int is_connected = FALSE;
+static struct global_t {
+    char * hostname;
+    char * username;
+    char * password;
+    FILE * main_pipe;
+    int auto_connect;
+    int is_connected;
+    int save_login_data;
+    GtkStatusbar * statusbar;
+    GtkBox * resultbox;
+    GError * error_msg;
+} global;
 
 /*****************************************************************************
  *  Global handlers, functions and threads                                    *
   *****************************************************************************/
 
+static void on_create(GtkWindow *, gpointer);
+static void on_destroy(GtkWindow *, gpointer);
 static void b_Connect_clicked(GtkButton *, GtkBox *);
-static void entry_edited(GtkEntry *, char *);
+static void entry_edited(GtkEntry *, char **);
 
 int remove_children(GtkContainer *);
 
@@ -41,11 +50,10 @@ int main(int argc, char * argv[])
     /* Loading widows forms from XML (Glade) file */
 
     GtkBuilder * builder = gtk_builder_new();
-    GError * error_msg = NULL;
 
-    if (!gtk_builder_add_from_file(builder, GLADE_FILE_NAME, &error_msg))
+    if (!gtk_builder_add_from_file(builder, GLADE_FILE_NAME, &global.error_msg))
     {
-        g_warning("%s\n", error_msg->message);
+        g_warning("%s\n", global.error_msg->message);
         return EXIT_FAILURE;
     }
 
@@ -53,27 +61,30 @@ int main(int argc, char * argv[])
 
     GtkWidget * main_window = GTK_WIDGET(gtk_builder_get_object(builder, MAIN_WINDOW_NAME));
     GtkWidget * b_Connect = GTK_WIDGET(gtk_builder_get_object(builder, CONNECT_BUTTON_NAME));
-    GtkWidget * box_Result = GTK_WIDGET(gtk_builder_get_object(builder, BOX_RESULT_NAME));
 
-    GtkWidget * e_Hostname = GTK_WIDGET(gtk_builder_get_object(builder, "e_Hostname"));
-    GtkWidget * e_Username = GTK_WIDGET(gtk_builder_get_object(builder, "e_Username"));
-    GtkWidget * e_Password = GTK_WIDGET(gtk_builder_get_object(builder, "e_Password"));
+    GtkWidget * e_Hostname = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_HOSTNAME_NAME));
+    GtkWidget * e_Username = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_USERNAME_NAME));
+    GtkWidget * e_Password = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_PASSWORD_NAME));
 
-    statusbar = GTK_WIDGET(gtk_builder_get_object(builder, STATUSBAR_NAME));
+    global.resultbox = GTK_BOX(gtk_builder_get_object(builder, BOX_RESULT_NAME));
+    global.statusbar = GTK_STATUSBAR(gtk_builder_get_object(builder, STATUSBAR_NAME));
 
     /* Signals */
 
     gtk_builder_connect_signals(builder, NULL);
 
-    g_signal_connect(b_Connect, "clicked", G_CALLBACK(b_Connect_clicked), box_Result);
+    g_signal_connect(main_window, "show", G_CALLBACK(on_create), NULL);
+    g_signal_connect(main_window, "destroy", G_CALLBACK(on_destroy), NULL);
 
-    g_signal_connect(e_Hostname, "changed", G_CALLBACK(entry_edited), hostname);
-    g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), username);
-    g_signal_connect(e_Password, "changed", G_CALLBACK(entry_edited), password);
+    g_signal_connect(b_Connect, "clicked", G_CALLBACK(b_Connect_clicked), global.resultbox);
+
+    g_signal_connect(e_Hostname, "changed", G_CALLBACK(entry_edited), &global.hostname);
+    g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), &global.username);
+    g_signal_connect(e_Password, "changed", G_CALLBACK(entry_edited), &global.password);
 
     /* Starting */
 
-    gtk_statusbar_push(GTK_STATUSBAR(statusbar), INFO_MESSAGE_ID, READY_MESSAGE);
+    gtk_statusbar_push(global.statusbar, INFO_MESSAGE_ID, READY_MESSAGE);
     g_object_unref(G_OBJECT(builder));
     gtk_widget_show_all(main_window);
     gtk_main();
@@ -82,11 +93,44 @@ int main(int argc, char * argv[])
 }
 
 /*****************************************************************************
+ * On Create                                                                  *
+  *****************************************************************************/
+
+static void on_create(GtkWindow * window, gpointer user_data)
+{
+    GKeyFile * config_keyfile = g_key_file_new();
+
+    if (g_key_file_load_from_file(config_keyfile, CONFIG_FILE_NAME,
+                                  G_KEY_FILE_NONE, &global.error_msg))
+    {
+        //
+    }
+    else
+    {
+        global.hostname = NULL;
+        global.username = NULL;
+        global.password = NULL;
+    }
+
+    global.is_connected = FALSE;
+}
+
+/*****************************************************************************
+ * On Destroy                                                                 *
+  *****************************************************************************/
+
+static void on_destroy(GtkWindow * window, gpointer user_data)
+{
+    gtk_main_quit();
+}
+
+/*****************************************************************************
  *  Button "Connect/Disconnect" handler                                       *
   *****************************************************************************/
 
 static void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
 {
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     remove_children(GTK_CONTAINER(box_Result));
 
     /* Adding spinner on screen */
@@ -96,7 +140,7 @@ static void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
     gtk_spinner_start(GTK_SPINNER(spinner));
     gtk_widget_show(spinner);
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    /* Connectin in new thread */
 
     pthread_t tid;
     pthread_attr_t attr;
@@ -109,10 +153,15 @@ static void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
  *  Entries handler ("Hostame", "Username", "Password")                       *
   *****************************************************************************/
 
-static void entry_edited(GtkEntry * entry, char * string)
+static void entry_edited(GtkEntry * entry, char ** string)
 {
+    if (*string != NULL)
+    {
+        free(*string);
+    }
+
     GtkEntryBuffer * entry_buffer = gtk_entry_get_buffer(entry);
-    string = strdup(gtk_entry_buffer_get_text(entry_buffer));
+    *string = strdup(gtk_entry_buffer_get_text(entry_buffer));
 }
 
 /*****************************************************************************
@@ -122,66 +171,75 @@ static void entry_edited(GtkEntry * entry, char * string)
 int remove_children(GtkContainer * container)
 {
     GList * children = gtk_container_get_children(GTK_CONTAINER(container));
-    GList * iterator;
 
-    for(iterator = children; iterator != NULL; iterator = g_list_next(iterator))
+    if (children != NULL)
     {
-        gtk_widget_destroy(GTK_WIDGET(iterator->data));
+        GList * iterator;
+
+        for (iterator = children; iterator != NULL; iterator = g_list_next(iterator))
+        {
+            gtk_widget_destroy(GTK_WIDGET(iterator->data));
+        }
+
+        g_list_free(children);
     }
 
-    g_list_free(children);
     return EXIT_SUCCESS;
 }
 
 /*****************************************************************************
- *  thread                                                                    *
+ *  Connecting/disconnecting thread                                           *
   *****************************************************************************/
 
 void * connect_thread(void * button)
 {
-    if (!is_connected)
+    GtkWidget * label = NULL;
+
+    if ((global.hostname == NULL) || (global.username == NULL))
+    {
+        gdk_threads_enter();
+        label = gtk_label_new("Status:\nEmpty field(s)!");
+        gtk_statusbar_push(global.statusbar, WARNING_MESSAGE_ID, INCORRECT_DATA_MESSAGE);
+    }
+    else if (!global.is_connected)
     {
         /* Connecting */
 
-        if (open_connection(hostname, username, password))
+        if ((global.main_pipe = open_connection(global.hostname, global.username, global.password)) != NULL)
         {
-            is_connected = TRUE;
+            global.is_connected = TRUE;
 
             gdk_threads_enter();
-            gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
+            label = gtk_label_new("Status:\nConnected");
             gtk_button_set_label(GTK_BUTTON(button), "gtk-disconnect");
-            gtk_statusbar_push(GTK_STATUSBAR(statusbar), INFO_MESSAGE_ID, CONNECTED_MESSAGE);
-            gdk_threads_leave();
+            gtk_statusbar_push(global.statusbar, INFO_MESSAGE_ID, CONNECTED_MESSAGE);
         }
         else
         {
             gdk_threads_enter();
-            gtk_statusbar_push(GTK_STATUSBAR(statusbar), ERROR_MESSAGE_ID, SOME_ERROR_MESSAGE);
-            gdk_threads_leave();
+            label = gtk_label_new("Status:\nError!!!");
+            gtk_statusbar_push(global.statusbar, ERROR_MESSAGE_ID, SOME_ERROR_MESSAGE);
         }
     }
     else
     {
         /* Disconnecting */
 
-        if (close_connection())
-        {
-            is_connected = FALSE;
+        close_connection(global.main_pipe);
+        global.is_connected = FALSE;
 
-            gdk_threads_enter();
-            gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
-            gtk_button_set_label(GTK_BUTTON(button), "gtk-connect");
-            gtk_statusbar_push(GTK_STATUSBAR(statusbar), INFO_MESSAGE_ID, DISCONNECTED_MESSAGE);
-            gdk_threads_leave();
-        }
-        else
-        {
-            gdk_threads_enter();
-            gtk_statusbar_push(GTK_STATUSBAR(statusbar), ERROR_MESSAGE_ID, SOME_ERROR_MESSAGE);
-            gdk_threads_leave();
-        }
+        gdk_threads_enter();
+        label = gtk_label_new("Status:\nDisconnected");
+        gtk_button_set_label(GTK_BUTTON(button), "gtk-connect");
+        gtk_statusbar_push(global.statusbar, INFO_MESSAGE_ID, DISCONNECTED_MESSAGE);
     }
 
-    return 0;
+    remove_children(GTK_CONTAINER(global.resultbox));
+    gtk_box_pack_start(global.resultbox, GTK_WIDGET(label), TRUE, TRUE, 1);
+    gtk_widget_show_all(GTK_WIDGET(global.resultbox));
+    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
+    gdk_threads_leave();
+
+    return NULL;
 }
 
