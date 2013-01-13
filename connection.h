@@ -3,9 +3,6 @@
 
 #include <stdio.h>
 
-#define CONNECTION_ERROR            0
-#define CONNECTION_SUCCESS          1
-
 #define COMMAND_BUFFER_SIZE         1024 * sizeof(char)
 
 FILE * open_connection(char *, char *, char *);

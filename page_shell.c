@@ -1,7 +1,7 @@
 #include "page_shell.h"
 #include "funcs.h"
 
-static global_t global;
+extern global_t global;
 char * string;
 
 int page_shell_bind(GtkBuilder * builder)

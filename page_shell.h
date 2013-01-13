@@ -3,6 +3,8 @@
 
 #include <gtk/gtk.h>
 
+/* Objects (in XML) */
+
 #define LABEL_ACCESS_NAME               "l_Access"
 #define ENTRY_COMMAND_NAME              "e_Shell"
 #define BUTTON_EXECUTE_NAME             "b_Execute"

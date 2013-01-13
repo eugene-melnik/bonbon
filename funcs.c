@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern global_t global;
+
+void show_in_statusbar(const char * str)
+{
+    gtk_statusbar_push(global.statusbar, 0, str);
+}
+
 /*****************************************************************************
  *  Entries handler                                                           *
   *****************************************************************************/
