@@ -26,6 +26,27 @@ void entry_edited(GtkEntry * entry, char ** string)
 }
 
 /*****************************************************************************
+ *  Combos handler                                                            *
+  *****************************************************************************/
+
+void combo_changed(GtkComboBoxText * combobox, char ** string)
+{
+    if (*string != NULL)
+    {
+        free(*string);
+    }
+
+    *string = strdup(gtk_combo_box_text_get_active_text(combobox));
+
+    g_print("%s\n", *string);
+
+    if (!strcmp(*string, NOTHING_STRING))
+    {
+        *string = NULL;
+    }
+}
+
+/*****************************************************************************
  *  Remove all child widgets in GtkContainer                                  *
   *****************************************************************************/
 

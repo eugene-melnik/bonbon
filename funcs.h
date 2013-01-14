@@ -11,6 +11,10 @@
 
 #define SOME_ERROR_MESSAGE      "Oops! There is some error here! :)"
 
+/* Strings */
+
+#define NOTHING_STRING          "-"
+
 /* Global constants */
 
 #define COMMAND_BUFFER_SIZE     2 * 1024 * sizeof(char)  // 2KiB
@@ -36,6 +40,7 @@ global_t global;
 
 void show_in_statusbar(const char *);
 void entry_edited(GtkEntry *, char **);
+void combo_changed(GtkComboBoxText *, char **);
 int remove_children(GtkContainer *);
 
 #endif // FUNCS_H_INCLUDED
