@@ -1,5 +1,6 @@
 #include "page_connection.h"
 #include "page_keyboard.h"
+#include "preferences.h"
 #include "page_shell.h"
 #include "connection.h"
 #include "bonbon.h"
@@ -31,6 +32,7 @@ int main(int argc, char * argv[])
     page_connection_bind(builder);
     page_keyboard_bind(builder);
     page_shell_bind(builder);
+    preferences_window_bind(builder);
 
     /* Signals */
 

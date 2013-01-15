@@ -42,6 +42,7 @@ global_t global;
 void show_in_statusbar(const char *);
 void entry_edited(GtkEntry *, char **);
 void combo_changed(GtkComboBoxText *, char **);
+void check_button_activate(GtkCheckButton *, int *);
 int remove_children(GtkContainer *);
 
 #endif // FUNCS_H_INCLUDED

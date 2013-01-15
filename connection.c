@@ -15,6 +15,7 @@ FILE * open_connection(char * hostname, char * username, char * password)
     {
         sleep(1);
         fputs(password, pipe);
+        fputs("\n", pipe);
     }
 
     free(command);
@@ -30,9 +31,8 @@ void close_connection(FILE * pipe)
 char * execute_command(FILE * pipe, const char * command)
 {
     char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
-    fputs(command, pipe);
-    fputs("&\n", pipe);
-
+    sprintf(com, "sh -c \"%s\"&\n", command);
+    fputs(com, pipe);
     fgets(com, COMMAND_BUFFER_SIZE, pipe);
 
     return com;

@@ -47,6 +47,15 @@ void combo_changed(GtkComboBoxText * combobox, char ** string)
 }
 
 /*****************************************************************************
+ *  Check button handler                                                      *
+  *****************************************************************************/
+
+void check_button_activate(GtkCheckButton * button, int * res)
+{
+    *res = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+}
+
+/*****************************************************************************
  *  Remove all child widgets in GtkContainer                                  *
   *****************************************************************************/
 
