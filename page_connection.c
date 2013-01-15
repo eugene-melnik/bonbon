@@ -3,6 +3,7 @@
 #include "funcs.h"
 
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 
 extern global_t global;
@@ -32,9 +33,11 @@ int page_connection_bind(GtkBuilder * builder)
     g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), &global.username);
     g_signal_connect(e_Password, "changed", G_CALLBACK(entry_edited), &global.password);
 
+    /* Actions */
+
     gtk_widget_show_all(GTK_WIDGET(main_window));
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /*****************************************************************************

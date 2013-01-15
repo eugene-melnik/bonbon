@@ -21,7 +21,7 @@ int page_shell_bind(GtkBuilder * builder)
     g_signal_connect(e_Shell, "activate", G_CALLBACK(b_Execute_clicked), text_buffer_Shell);
     g_signal_connect(b_Execute, "clicked", G_CALLBACK(b_Execute_clicked), text_buffer_Shell);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void b_Execute_clicked(GtkButton * button, GtkTextBuffer * buffer)

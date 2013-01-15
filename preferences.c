@@ -1,7 +1,7 @@
 #include "preferences.h"
 #include "funcs.h"
 
-#include "stdlib.h"
+#include <stdlib.h>
 
 extern global_t global;
 
@@ -16,6 +16,8 @@ int preferences_window_bind(GtkBuilder * builder)
 
     g_signal_connect(check_Save_login_data, "toggled", G_CALLBACK(check_button_activate), &global.save_login_data);
     g_signal_connect(check_Auto_login, "toggled", G_CALLBACK(check_button_activate), &global.auto_connect);
+
+    /* Actions */
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_Save_login_data), global.save_login_data);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_Auto_login), global.auto_connect);

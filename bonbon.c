@@ -1,10 +1,4 @@
-#include "page_connection.h"
-#include "page_keyboard.h"
-#include "preferences.h"
-#include "page_shell.h"
-#include "connection.h"
 #include "bonbon.h"
-#include "funcs.h"
 
 #include <gtk/gtk.h>
 #include <stdlib.h>
