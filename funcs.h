@@ -13,6 +13,7 @@
 
 /* Strings */
 
+#define EMPTY_STRING            ""
 #define NOTHING_STRING          "-"
 
 /* Global constants */

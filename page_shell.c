@@ -1,5 +1,8 @@
 #include "page_shell.h"
+#include "connection.h"
 #include "funcs.h"
+
+#include <stdlib.h>
 
 extern global_t global;
 char * string;
@@ -29,6 +32,13 @@ void b_Execute_clicked(GtkButton * button, GtkTextBuffer * buffer)
     if (global.is_connected)
     {
         gtk_text_buffer_insert(buffer, &iter, string, -1);
+
+        char * str = execute_command(global.main_pipe, string);
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, str, -1);
+        free(str);
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", -1);
     }
     else
     {

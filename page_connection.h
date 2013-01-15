@@ -13,6 +13,14 @@
 #define ENTRY_USERNAME_NAME     "e_Username"
 #define ENTRY_PASSWORD_NAME     "e_Password"
 
+#define GROUP_PREFS             "Preferences"
+#define GROUP_LOGIN             "Login"
+#define SAVE_LOGIN_CFG          "save_login_data"
+#define AUTO_CONNECT_CFG        "auto_connect"
+#define USERNAME_CFG            "username"
+#define HOSTNAME_CFG            "hostname"
+#define PASSWORD_CFG            "password"
+
 /* Statusbar messages */
 
 #define READY_MESSAGE           "Ready to party!"
@@ -29,8 +37,8 @@
 
 int page_connection_bind(GtkBuilder *);
 
-void on_create(GtkWindow *, gpointer);
-void on_destroy(GtkWindow *, gpointer);
+void on_create(GtkWindow *, GtkButton *);
+void on_destroy(GtkWindow *, GtkButton *);
 void b_Connect_clicked(GtkButton *, GtkBox *);
 
 void * connect_thread(void *);

@@ -2,25 +2,31 @@
 #include "connection.h"
 #include "funcs.h"
 
+#include <unistd.h>
+#include <string.h>
+
 extern global_t global;
+GtkWidget * e_Username;
+GtkWidget * e_Hostname;
+GtkWidget * e_Password;
 GtkBox * resultbox;
 
 int page_connection_bind(GtkBuilder * builder)
 {
     /* Objects */
 
-    GtkWidget * b_Connect = GTK_WIDGET(gtk_builder_get_object(builder, CONNECT_BUTTON_NAME));
-    GtkWidget * e_Hostname = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_HOSTNAME_NAME));
-    GtkWidget * e_Username = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_USERNAME_NAME));
-    GtkWidget * e_Password = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_PASSWORD_NAME));
     GtkWindow * main_window = GTK_WINDOW(gtk_builder_get_object(builder, MAIN_WINDOW_NAME));
+    GtkWidget * b_Connect = GTK_WIDGET(gtk_builder_get_object(builder, CONNECT_BUTTON_NAME));
+    e_Username = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_USERNAME_NAME));
+    e_Hostname = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_HOSTNAME_NAME));
+    e_Password = GTK_WIDGET(gtk_builder_get_object(builder, ENTRY_PASSWORD_NAME));
     global.statusbar = GTK_STATUSBAR(gtk_builder_get_object(builder, STATUSBAR_NAME));
     resultbox = GTK_BOX(gtk_builder_get_object(builder, BOX_RESULT_NAME));
 
     /* Signals */
 
-    g_signal_connect(main_window, "show", G_CALLBACK(on_create), NULL);
-    g_signal_connect(main_window, "destroy", G_CALLBACK(on_destroy), NULL);
+    g_signal_connect(main_window, "show", G_CALLBACK(on_create), b_Connect);
+    g_signal_connect(main_window, "destroy", G_CALLBACK(on_destroy), b_Connect);
     g_signal_connect(b_Connect, "clicked", G_CALLBACK(b_Connect_clicked), resultbox);
     g_signal_connect(e_Hostname, "changed", G_CALLBACK(entry_edited), &global.hostname);
     g_signal_connect(e_Username, "changed", G_CALLBACK(entry_edited), &global.username);
@@ -35,31 +41,48 @@ int page_connection_bind(GtkBuilder * builder)
  * On Create                                                                  *
   *****************************************************************************/
 
-void on_create(GtkWindow * window, gpointer user_data)
-{
+void on_create(GtkWindow * window, GtkButton * b_Connect)
+{    
+    global.save_login_data = FALSE;
+    global.auto_connect = FALSE;
+    global.is_connected = FALSE;
+    global.hostname = EMPTY_STRING;
+    global.username = EMPTY_STRING;
+    global.password = EMPTY_STRING;
+
     GKeyFile * config_keyfile = g_key_file_new();
 
-    if (g_key_file_load_from_file(config_keyfile, CONFIG_FILE_NAME,
-                                  G_KEY_FILE_NONE, &global.error_msg))
+    if (g_key_file_load_from_file(config_keyfile, CONFIG_FILE_NAME, G_KEY_FILE_NONE, &global.error_msg))
     {
-        //
-    }
-    else
-    {
-        global.hostname = NULL;
-        global.username = NULL;
-        global.password = NULL;
+        global.save_login_data = g_key_file_get_boolean(config_keyfile, GROUP_PREFS, SAVE_LOGIN_CFG, &global.error_msg);
+        global.auto_connect = g_key_file_get_boolean(config_keyfile, GROUP_PREFS, AUTO_CONNECT_CFG, &global.error_msg);
+        global.hostname = g_key_file_get_string(config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, &global.error_msg);
+        global.username = g_key_file_get_string(config_keyfile, GROUP_LOGIN, USERNAME_CFG, &global.error_msg);
+        global.password = g_key_file_get_string(config_keyfile, GROUP_LOGIN, PASSWORD_CFG, &global.error_msg);
     }
 
-    global.is_connected = FALSE;
+    gtk_entry_set_text(GTK_ENTRY(e_Hostname), global.hostname);
+    gtk_entry_set_text(GTK_ENTRY(e_Username), global.username);
+    gtk_entry_set_text(GTK_ENTRY(e_Password), global.password);
+
+    if (global.auto_connect)
+    {
+        b_Connect_clicked(b_Connect, resultbox);
+    }
 }
 
 /*****************************************************************************
  * On Destroy                                                                 *
   *****************************************************************************/
 
-void on_destroy(GtkWindow * window, gpointer user_data)
+void on_destroy(GtkWindow * window, GtkButton * b_Connect)
 {
+    if (global.is_connected)
+    {
+        b_Connect_clicked(b_Connect, resultbox);
+        sleep(1);
+    }
+
     gtk_main_quit();
 }
 
@@ -96,7 +119,7 @@ void * connect_thread(void * button)
 {
     GtkWidget * label = NULL;
 
-    if ((global.hostname == NULL) || (global.username == NULL))
+    if (!strcmp(global.hostname, EMPTY_STRING) || !strcmp(global.username, EMPTY_STRING))
     {
         gdk_threads_enter();
         show_in_statusbar(INCORRECT_DATA_MESSAGE);
@@ -111,6 +134,7 @@ void * connect_thread(void * button)
             global.is_connected = TRUE;
 
             gdk_threads_enter();
+            /* TODO: Make entries editable property off */
             show_in_statusbar(CONNECTED_MESSAGE);
             label = gtk_label_new(STATUS_CONNECTED);
             gtk_button_set_label(GTK_BUTTON(button), "gtk-disconnect");

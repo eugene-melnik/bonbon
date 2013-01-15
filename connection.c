@@ -11,11 +11,10 @@ FILE * open_connection(char * hostname, char * username, char * password)
     sprintf(command, "ssh -T %s@%s > /dev/null\n", username, hostname);
     FILE * pipe = popen(command, "w");
 
-    if (password != NULL)
+    if (!strcmp(password, EMPTY_STRING))
     {
-        sleep(2);
+        sleep(1);
         fputs(password, pipe);
-        fflush(pipe);
     }
 
     free(command);
@@ -24,8 +23,7 @@ FILE * open_connection(char * hostname, char * username, char * password)
 
 void close_connection(FILE * pipe)
 {
-    const char * command = "exit\n";
-    fputs(command, pipe);
+    fputs("exit\n", pipe);
     pclose(pipe);
 }
 
@@ -33,6 +31,8 @@ char * execute_command(FILE * pipe, const char * command)
 {
     char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
     fputs(command, pipe);
+    fputs("&\n", pipe);
+
     fgets(com, COMMAND_BUFFER_SIZE, pipe);
 
     return com;

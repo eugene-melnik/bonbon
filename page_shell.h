@@ -12,7 +12,7 @@
 
 /* Statusbar messages */
 
-#define OFFLINE_MESSAGE                 "You are offline!!!\n"
+#define OFFLINE_MESSAGE                 "You are offline!!!"
 
 /* Handlers */
 
