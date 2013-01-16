@@ -3,12 +3,7 @@
 
 #include <stdio.h>
 
-#define LOGIN_SCRIPT "#!/usr/bin/expect"
-                     "spawn ssh %s@%s"
-                     "expect \"password:\""
-                     "send %s"
-                     "sh"
-                     "exit 0"
+#define LOGIN_SCRIPT                    "ssh -T %s@%s > /dev/null\n" // "#!/usr/bin/expect\nspawn ssh %s@%s\nexpect \"password:\"\nsend %s\nsh\nexit 0"
 
 FILE * open_connection(char *, char *, char *);
 void close_connection(FILE *);

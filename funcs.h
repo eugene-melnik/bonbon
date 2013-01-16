@@ -15,6 +15,7 @@
 
 #define EMPTY_STRING            ""
 #define NOTHING_STRING          "-"
+#define END_OF_LINE             "\n"
 
 /* Global constants */
 
