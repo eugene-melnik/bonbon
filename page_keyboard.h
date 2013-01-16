@@ -16,6 +16,15 @@
 #define BUTTON_K_DOWN           "b_K_Down"
 #define BUTTON_K_LEFT           "b_K_Left"
 #define BUTTON_K_RIGHT          "b_K_Right"
+#define BUTTON_K_ESC            "b_K_Esc"
+#define BUTTON_K_TAB            "b_K_Tab"
+#define BUTTON_K_SUPER          "b_K_Super"
+#define BUTTON_K_SPACE          "b_K_Space"
+#define BUTTON_K_BS             "b_K_BS"
+#define BUTTON_K_DEL            "b_K_Del"
+#define BUTTON_K_RETURN         "b_K_Return"
+#define BUTTON_K_HOME           "b_K_Home"
+#define BUTTON_K_END            "b_K_End"
 
 /* Statusbar messages */
 

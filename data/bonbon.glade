@@ -42,9 +42,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Hostname">
-    <property name="max_length">50</property>
-  </object>
   <object class="GtkEntryBuffer" id="buffer_Key3">
     <property name="max_length">1000</property>
   </object>
@@ -55,6 +52,9 @@
     <property name="max_length">50</property>
   </object>
   <object class="GtkEntryBuffer" id="buffer_Username">
+    <property name="max_length">50</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Hostname">
     <property name="max_length">50</property>
   </object>
   <object class="GtkWindow" id="main_window">
@@ -437,6 +437,19 @@
                           <item translatable="yes">BS</item>
                           <item translatable="yes">Tab</item>
                           <item translatable="yes">Home</item>
+                          <item>End</item>
+                          <item translatable="yes">F1</item>
+                          <item translatable="yes">F2</item>
+                          <item translatable="yes">F3</item>
+                          <item translatable="yes">F4</item>
+                          <item translatable="yes">F5</item>
+                          <item translatable="yes">F6</item>
+                          <item translatable="yes">F7</item>
+                          <item translatable="yes">F8</item>
+                          <item translatable="yes">F9</item>
+                          <item translatable="yes">F10</item>
+                          <item translatable="yes">F11</item>
+                          <item translatable="yes">F12</item>
                         </items>
                       </object>
                       <packing>
@@ -556,9 +569,234 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkFixed" id="fixedbox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkButton" id="b_K_Up">
+                        <property name="label" translatable="yes">↑</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">55</property>
+                        <property name="height_request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Left">
+                        <property name="label" translatable="yes">←</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">60</property>
+                        <property name="height_request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">125</property>
+                        <property name="y">55</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Down">
+                        <property name="label" translatable="yes">↓</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">55</property>
+                        <property name="height_request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">55</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Right">
+                        <property name="label" translatable="yes">→</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">60</property>
+                        <property name="height_request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="border_width">5</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">240</property>
+                        <property name="y">55</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Esc">
+                        <property name="label" translatable="yes">Esc</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">40</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">10</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Tab">
+                        <property name="label" translatable="yes">Tab</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">40</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">10</property>
+                        <property name="y">60</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Super">
+                        <property name="label" translatable="yes">Super</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">60</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">60</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Space">
+                        <property name="label" translatable="yes">Space</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">60</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">60</property>
+                        <property name="y">60</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_BS">
+                        <property name="label" translatable="yes">BackSpace</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">80</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">365</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Del">
+                        <property name="label" translatable="yes">Del</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">50</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">305</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Return">
+                        <property name="label" translatable="yes">Return</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">140</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">305</property>
+                        <property name="y">60</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_Home">
+                        <property name="label" translatable="yes">Home</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">40</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">130</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="b_K_End">
+                        <property name="label">End</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="width_request">50</property>
+                        <property name="height_request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_action_appearance">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">245</property>
+                        <property name="y">10</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkBox" id="subbox3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="margin_top">2</property>
+                    <property name="margin_bottom">2</property>
                     <child>
                       <object class="GtkLabel" id="l_Grab_keyboard">
                         <property name="visible">True</property>
@@ -596,94 +834,6 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkGrid" id="grid_Arrows">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_left">120</property>
-                    <property name="margin_right">120</property>
-                    <property name="margin_top">20</property>
-                    <child>
-                      <object class="GtkButton" id="b_K_Up">
-                        <property name="label" translatable="yes">↑</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="border_width">5</property>
-                        <property name="use_action_appearance">False</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">0</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="b_K_Left">
-                        <property name="label" translatable="yes">←</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="border_width">5</property>
-                        <property name="use_action_appearance">False</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">1</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="b_K_Down">
-                        <property name="label" translatable="yes">↓</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="border_width">5</property>
-                        <property name="use_action_appearance">False</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="b_K_Right">
-                        <property name="label" translatable="yes">→</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="border_width">5</property>
-                        <property name="use_action_appearance">False</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">1</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
