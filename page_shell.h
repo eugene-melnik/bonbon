@@ -14,7 +14,6 @@
 /* Statusbar messages */
 
 #define DONE_MESSAGE                    "Done!"
-#define OFFLINE_MESSAGE                 "You are offline!"
 #define ENTER_COMMAND_MESSAGE           "Enter command first!"
 
 /* Handlers */

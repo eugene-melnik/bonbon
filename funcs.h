@@ -5,22 +5,23 @@
 
 /* Files */
 
-#define CONFIG_FILE_NAME        "data/bonbon.conf"
+#define CONFIG_FILE_NAME                "data/bonbon.conf"
 
 /* Statusbar messages */
 
-#define SOME_ERROR_MESSAGE      "Oops! There is some error here! :)"
+#define SOME_ERROR_MESSAGE              "Oops! There is some error here! :)"
+#define OFFLINE_MESSAGE                 "You are offline!"
 
 /* Strings */
 
-#define EMPTY_STRING            ""
-#define NOTHING_STRING          "-"
-#define END_OF_LINE             "\n"
+#define EMPTY_STRING                    ""
+#define NOTHING_STRING                  "-"
+#define END_OF_LINE                     "\n"
 
 /* Global constants */
 
-#define COMMAND_BUFFER_SIZE     2 * 1024 * sizeof(char)  // 2KiB
-#define THREAD_STACK_SIZE       64 * 1024  // 64KiB
+#define COMMAND_BUFFER_SIZE             2 * 1024 * sizeof(char)  // 2KiB
+#define THREAD_STACK_SIZE               64 * 1024  // 64KiB
 
 /* Global variables */
 

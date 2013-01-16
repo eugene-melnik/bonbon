@@ -38,8 +38,6 @@ void combo_changed(GtkComboBoxText * combobox, char ** string)
 
     *string = strdup(gtk_combo_box_text_get_active_text(combobox));
 
-    g_print("%s\n", *string);
-
     if (!strcmp(*string, NOTHING_STRING))
     {
         *string = NULL;

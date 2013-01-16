@@ -32,12 +32,25 @@ char * execute_command(FILE * pipe, const char * command)
 {
     char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
     sprintf(com, "sh -c \"%s\" &\n", command);
+
     fputs(com, pipe);
     fgets(com, COMMAND_BUFFER_SIZE, pipe);
     g_print("%s", com);
-    //fgets(com, COMMAND_BUFFER_SIZE, stdin);
-    //g_print("%s", com);
 
     return com;
+}
+
+int send_key(FILE * pipe, const char * key)
+{
+    char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
+    sprintf(com, "DISPLAY=:0.0 xdotool key %s", key);
+
+    char * res = execute_command(pipe, com);
+
+    printf("%s\n%s\n", com, res);
+    free(res);
+    free(com);
+
+    return EXIT_SUCCESS;
 }
 

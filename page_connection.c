@@ -105,7 +105,7 @@ void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
     gtk_spinner_start(GTK_SPINNER(spinner));
     gtk_widget_show(spinner);
 
-    /* Connectin in new thread */
+    /* Connecting in new thread */
 
     pthread_t tid;
     pthread_attr_t attr;
@@ -115,7 +115,7 @@ void b_Connect_clicked(GtkButton * button, GtkBox * box_Result)
 }
 
 /*****************************************************************************
- *  Connecting/disconnecting thread                                           *
+ *  Connecting/disconnecting                                                  *
   *****************************************************************************/
 
 void * connect_thread(void * button)

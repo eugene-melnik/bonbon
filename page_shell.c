@@ -45,7 +45,7 @@ void b_Execute_clicked(GtkButton * button, gpointer userdata)
             show_in_statusbar(DONE_MESSAGE);
 
             char * str = execute_command(global.main_pipe, string);
-            gtk_text_buffer_insert(text_buffer_Shell, &iter, str, -1);
+            //gtk_text_buffer_insert(text_buffer_Shell, &iter, str, -1);
             free(str);
         }
         else
