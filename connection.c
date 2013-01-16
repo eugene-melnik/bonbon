@@ -8,14 +8,14 @@
 FILE * open_connection(char * hostname, char * username, char * password)
 {
     char * command = (char *) malloc(COMMAND_BUFFER_SIZE);
-    sprintf(command, "ssh -T %s@%s > /dev/null\n", username, hostname);
+    sprintf(command, "sh -c ssh -T %s@%s > /dev/null\n", username, hostname);
     FILE * pipe = popen(command, "w");
 
     if (!strcmp(password, EMPTY_STRING))
     {
         sleep(1);
-        fputs(password, pipe);
-        fputs("\n", pipe);
+        fputs(password, stdin);
+        fputs("\n", stdin);
     }
 
     free(command);
