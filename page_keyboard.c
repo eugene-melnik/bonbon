@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 extern global_t global;
 
@@ -60,6 +61,8 @@ int page_keyboard_bind(GtkBuilder * builder)
     g_signal_connect(b_K_Home, "clicked", G_CALLBACK(key_pressed), "Home");
     g_signal_connect(b_K_End, "clicked", G_CALLBACK(key_pressed), "End");
 
+    g_signal_connect(toggle_Grab_keyboard, "toggled", G_CALLBACK(toggle_pressed), NULL);
+
     return EXIT_SUCCESS;
 }
 
@@ -85,11 +88,27 @@ void multiply_keys(GtkButton * button, gpointer data)
     {
         str[strlen(str) - 1] = '\0';
     }
+
+    send_key(global.main_pipe, str);
 }
 
 void key_sequence(GtkButton * button, gpointer data)
 {
-    //
+    if (global.is_connected)
+    {
+        char * token = strtok(key_seq, " ");
+
+        while (token != NULL)
+        {
+            send_key(global.main_pipe, token);
+            token = strtok(NULL, " ");
+            sleep(1);
+        }
+    }
+    else
+    {
+        show_in_statusbar(OFFLINE_MESSAGE);
+    }
 }
 
 void key_pressed(GtkButton * button, const char * type)
@@ -103,5 +122,10 @@ void key_pressed(GtkButton * button, const char * type)
     {
         show_in_statusbar(OFFLINE_MESSAGE);
     }
+}
+
+void toggle_pressed(GtkToggleButton * toggle, gpointer data)
+{
+    //
 }
 

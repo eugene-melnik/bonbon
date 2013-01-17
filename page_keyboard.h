@@ -35,6 +35,7 @@ int page_keyboard_bind(GtkBuilder *);
 void multiply_keys(GtkButton *, gpointer);
 void key_sequence(GtkButton *, gpointer);
 void key_pressed(GtkButton *, const char *);
+void toggle_pressed(GtkToggleButton *, gpointer);
 
 #endif // PAGE_KEYBOARD_H_INCLUDED
 

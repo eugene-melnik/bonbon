@@ -7,6 +7,7 @@
     <property name="title" translatable="yes">About Bonbon</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="program_name">Bonbon</property>
     <property name="version">0.5</property>
@@ -45,9 +46,6 @@
   <object class="GtkEntryBuffer" id="buffer_Hostname">
     <property name="max_length">50</property>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Key3">
-    <property name="max_length">1000</property>
-  </object>
   <object class="GtkEntryBuffer" id="buffer_Key_sequence">
     <property name="max_length">10</property>
   </object>
@@ -56,6 +54,9 @@
   </object>
   <object class="GtkEntryBuffer" id="buffer_Username">
     <property name="max_length">50</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Key3">
+    <property name="max_length">1000</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="width_request">450</property>

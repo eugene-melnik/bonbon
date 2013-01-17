@@ -33,6 +33,7 @@ char * execute_command(FILE * pipe, const char * command)
     char * com = (char *) malloc(COMMAND_BUFFER_SIZE);
     sprintf(com, "sh -c \"%s\" &\n", command);
     fputs(com, pipe);
+    fflush(pipe);
     fgets(com, COMMAND_BUFFER_SIZE, pipe);
 
     return com;
