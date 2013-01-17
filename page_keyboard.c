@@ -68,26 +68,12 @@ int page_keyboard_bind(GtkBuilder * builder)
 
 void multiply_keys(GtkButton * button, gpointer data)
 {
-    char str[100] = "";
+    char str[100] = EMPTY_STRING;
 
-    if (key1 != NULL)
-    {
-        strcat(str, key1);
-        strcat(str, "+");
-    }
-    if (key2 != NULL)
-    {
-        strcat(str, key2);
-        strcat(str, "+");
-    }
-    if (key3 != NULL)
-    {
-        strcat(str, key3);
-    }
-    else if (strlen(str) != 0)
-    {
-        str[strlen(str) - 1] = '\0';
-    }
+    if (key1 != NULL) { strcat(str, key1); strcat(str, PLUS_S); }
+    if (key2 != NULL) { strcat(str, key2); strcat(str, PLUS_S); }
+    if (key3 != NULL) { strcat(str, key3); }
+    else if (strlen(str) != 0) { str[strlen(str) - 1] = END_OF_STRING; }
 
     send_key(global.main_pipe, str);
 }
