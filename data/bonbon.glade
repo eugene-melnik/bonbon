@@ -42,6 +42,9 @@
       </object>
     </child>
   </object>
+  <object class="GtkEntryBuffer" id="buffer_Hostname">
+    <property name="max_length">50</property>
+  </object>
   <object class="GtkEntryBuffer" id="buffer_Key3">
     <property name="max_length">1000</property>
   </object>
@@ -52,9 +55,6 @@
     <property name="max_length">50</property>
   </object>
   <object class="GtkEntryBuffer" id="buffer_Username">
-    <property name="max_length">50</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_Hostname">
     <property name="max_length">50</property>
   </object>
   <object class="GtkWindow" id="main_window">
@@ -367,12 +367,12 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkLabel" id="l_Multiple_keys">
+                      <object class="GtkLabel" id="l_Multiply_keys">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xpad">20</property>
                         <property name="ypad">10</property>
-                        <property name="label" translatable="yes">Multiple keys:</property>
+                        <property name="label" translatable="yes">Multiply keys:</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
