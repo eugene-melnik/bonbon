@@ -7,7 +7,7 @@
 
 #define COMBO_KEY1              "combo_Key1"
 #define COMBO_KEY2              "combo_Key2"
-#define ENTRY_KEY3              "entry_key3"
+#define ENTRY_KEY3              "entry_Key3"
 #define BUTTON_SEND1            "b_Send1"
 #define BUTTON_SEND2            "b_Send2"
 #define ENTRY_KEY_SEQ           "entry_Key_sequence"
@@ -32,7 +32,9 @@
 
 int page_keyboard_bind(GtkBuilder *);
 
-void arrow_pressed(GtkButton *, const char *);
+void multiply_keys(GtkButton *, gpointer);
+void key_sequence(GtkButton *, gpointer);
+void key_pressed(GtkButton *, const char *);
 
 #endif // PAGE_KEYBOARD_H_INCLUDED
 

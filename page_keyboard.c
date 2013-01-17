@@ -3,13 +3,14 @@
 #include "funcs.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 extern global_t global;
 
-char * key1;
-char * key2;
-char * key3;
-char * key_seq;
+char * key1 = NULL;
+char * key2 = NULL;
+char * key3 = NULL;
+char * key_seq = NULL;
 
 int page_keyboard_bind(GtkBuilder * builder)
 {
@@ -42,25 +43,56 @@ int page_keyboard_bind(GtkBuilder * builder)
     g_signal_connect(combo_Key2, "changed", G_CALLBACK(combo_changed), &key2);
     g_signal_connect(entry_Key3, "changed", G_CALLBACK(entry_edited), &key3);
     g_signal_connect(entry_Key_sequence, "changed", G_CALLBACK(entry_edited), &key_seq);
+    g_signal_connect(b_Send1, "clicked", G_CALLBACK(multiply_keys), NULL);
+    g_signal_connect(b_Send2, "clicked", G_CALLBACK(key_sequence), NULL);
 
-    g_signal_connect(b_K_Up, "clicked", G_CALLBACK(arrow_pressed), "Up");
-    g_signal_connect(b_K_Down, "clicked", G_CALLBACK(arrow_pressed), "Down");
-    g_signal_connect(b_K_Left, "clicked", G_CALLBACK(arrow_pressed), "Left");
-    g_signal_connect(b_K_Right, "clicked", G_CALLBACK(arrow_pressed), "Right");
-    g_signal_connect(b_K_Esc, "clicked", G_CALLBACK(arrow_pressed), "Escape");
-    g_signal_connect(b_K_Tab, "clicked", G_CALLBACK(arrow_pressed), "Tab");
-    g_signal_connect(b_K_Super, "clicked", G_CALLBACK(arrow_pressed), "super");
-    g_signal_connect(b_K_Space, "clicked", G_CALLBACK(arrow_pressed), "space");
-    g_signal_connect(b_K_BS, "clicked", G_CALLBACK(arrow_pressed), "BackSpace");
-    g_signal_connect(b_K_Del, "clicked", G_CALLBACK(arrow_pressed), "Delete");
-    g_signal_connect(b_K_Return, "clicked", G_CALLBACK(arrow_pressed), "Return");
-    g_signal_connect(b_K_Home, "clicked", G_CALLBACK(arrow_pressed), "Home");
-    g_signal_connect(b_K_End, "clicked", G_CALLBACK(arrow_pressed), "End");
+    g_signal_connect(b_K_Up, "clicked", G_CALLBACK(key_pressed), "Up");
+    g_signal_connect(b_K_Down, "clicked", G_CALLBACK(key_pressed), "Down");
+    g_signal_connect(b_K_Left, "clicked", G_CALLBACK(key_pressed), "Left");
+    g_signal_connect(b_K_Right, "clicked", G_CALLBACK(key_pressed), "Right");
+    g_signal_connect(b_K_Esc, "clicked", G_CALLBACK(key_pressed), "Escape");
+    g_signal_connect(b_K_Tab, "clicked", G_CALLBACK(key_pressed), "Tab");
+    g_signal_connect(b_K_Super, "clicked", G_CALLBACK(key_pressed), "super");
+    g_signal_connect(b_K_Space, "clicked", G_CALLBACK(key_pressed), "space");
+    g_signal_connect(b_K_BS, "clicked", G_CALLBACK(key_pressed), "BackSpace");
+    g_signal_connect(b_K_Del, "clicked", G_CALLBACK(key_pressed), "Delete");
+    g_signal_connect(b_K_Return, "clicked", G_CALLBACK(key_pressed), "Return");
+    g_signal_connect(b_K_Home, "clicked", G_CALLBACK(key_pressed), "Home");
+    g_signal_connect(b_K_End, "clicked", G_CALLBACK(key_pressed), "End");
 
     return EXIT_SUCCESS;
 }
 
-void arrow_pressed(GtkButton * button, const char * type)
+void multiply_keys(GtkButton * button, gpointer data)
+{
+    char str[100] = "";
+
+    if (key1 != NULL)
+    {
+        strcat(str, key1);
+        strcat(str, "+");
+    }
+    if (key2 != NULL)
+    {
+        strcat(str, key2);
+        strcat(str, "+");
+    }
+    if (key3 != NULL)
+    {
+        strcat(str, key3);
+    }
+    else if (strlen(str) != 0)
+    {
+        str[strlen(str) - 1] = '\0';
+    }
+}
+
+void key_sequence(GtkButton * button, gpointer data)
+{
+    //
+}
+
+void key_pressed(GtkButton * button, const char * type)
 {
     if (global.is_connected)
     {
