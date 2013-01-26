@@ -43,6 +43,12 @@
       </object>
     </child>
   </object>
+  <object class="GtkEntryBuffer" id="buffer_Hostname">
+    <property name="max_length">50</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Key3">
+    <property name="max_length">1000</property>
+  </object>
   <object class="GtkEntryBuffer" id="buffer_Key_sequence">
     <property name="max_length">10</property>
   </object>
@@ -51,12 +57,6 @@
   </object>
   <object class="GtkEntryBuffer" id="buffer_Username">
     <property name="max_length">50</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_Hostname">
-    <property name="max_length">50</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_Key3">
-    <property name="max_length">1000</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="width_request">450</property>
@@ -391,15 +391,15 @@
                         <property name="entry_text_column">0</property>
                         <property name="id_column">1</property>
                         <items>
-                          <item translatable="yes">-</item>
-                          <item translatable="yes">ctrl</item>
-                          <item translatable="yes">alt</item>
-                          <item translatable="yes">shift</item>
-                          <item translatable="yes">super</item>
-                          <item translatable="yes">Return</item>
-                          <item translatable="yes">BS</item>
-                          <item translatable="yes">Tab</item>
-                          <item translatable="yes">Home</item>
+                          <item>-</item>
+                          <item>ctrl</item>
+                          <item>alt</item>
+                          <item>shift</item>
+                          <item>super</item>
+                          <item>Return</item>
+                          <item>BS</item>
+                          <item>Tab</item>
+                          <item>Home</item>
                         </items>
                       </object>
                       <packing>
@@ -413,7 +413,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xpad">2</property>
-                        <property name="label" translatable="yes">+</property>
+                        <property name="label">+</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -430,28 +430,28 @@
                         <property name="entry_text_column">0</property>
                         <property name="id_column">1</property>
                         <items>
-                          <item translatable="yes">-</item>
-                          <item translatable="yes">ctrl</item>
-                          <item translatable="yes">alt</item>
-                          <item translatable="yes">shift</item>
-                          <item translatable="yes">super</item>
-                          <item translatable="yes">Return</item>
-                          <item translatable="yes">BS</item>
-                          <item translatable="yes">Tab</item>
-                          <item translatable="yes">Home</item>
+                          <item>-</item>
+                          <item>ctrl</item>
+                          <item>alt</item>
+                          <item>shift</item>
+                          <item>super</item>
+                          <item>Return</item>
+                          <item>BS</item>
+                          <item>Tab</item>
+                          <item>Home</item>
                           <item>End</item>
-                          <item translatable="yes">F1</item>
-                          <item translatable="yes">F2</item>
-                          <item translatable="yes">F3</item>
-                          <item translatable="yes">F4</item>
-                          <item translatable="yes">F5</item>
-                          <item translatable="yes">F6</item>
-                          <item translatable="yes">F7</item>
-                          <item translatable="yes">F8</item>
-                          <item translatable="yes">F9</item>
-                          <item translatable="yes">F10</item>
-                          <item translatable="yes">F11</item>
-                          <item translatable="yes">F12</item>
+                          <item>F1</item>
+                          <item>F2</item>
+                          <item>F3</item>
+                          <item>F4</item>
+                          <item>F5</item>
+                          <item>F6</item>
+                          <item>F7</item>
+                          <item>F8</item>
+                          <item>F9</item>
+                          <item>F10</item>
+                          <item>F11</item>
+                          <item>F12</item>
                         </items>
                       </object>
                       <packing>
@@ -465,7 +465,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xpad">2</property>
-                        <property name="label" translatable="yes">+</property>
+                        <property name="label">+</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -576,7 +576,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkButton" id="b_K_Up">
-                        <property name="label" translatable="yes">↑</property>
+                        <property name="label">↑</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">55</property>
                         <property name="height_request">50</property>
@@ -593,7 +593,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Left">
-                        <property name="label" translatable="yes">←</property>
+                        <property name="label">←</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">60</property>
                         <property name="height_request">50</property>
@@ -610,7 +610,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Down">
-                        <property name="label" translatable="yes">↓</property>
+                        <property name="label">↓</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">55</property>
                         <property name="height_request">50</property>
@@ -627,7 +627,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Right">
-                        <property name="label" translatable="yes">→</property>
+                        <property name="label">→</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">60</property>
                         <property name="height_request">50</property>
@@ -644,7 +644,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Esc">
-                        <property name="label" translatable="yes">Esc</property>
+                        <property name="label">Esc</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">40</property>
                         <property name="height_request">40</property>
@@ -660,7 +660,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Tab">
-                        <property name="label" translatable="yes">Tab</property>
+                        <property name="label">Tab</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">40</property>
                         <property name="height_request">40</property>
@@ -676,7 +676,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Super">
-                        <property name="label" translatable="yes">Super</property>
+                        <property name="label">Super</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">60</property>
                         <property name="height_request">40</property>
@@ -692,7 +692,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Space">
-                        <property name="label" translatable="yes">Space</property>
+                        <property name="label">Space</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">60</property>
                         <property name="height_request">40</property>
@@ -708,7 +708,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_BS">
-                        <property name="label" translatable="yes">BackSpace</property>
+                        <property name="label">BackSpace</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">80</property>
                         <property name="height_request">40</property>
@@ -724,7 +724,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Del">
-                        <property name="label" translatable="yes">Del</property>
+                        <property name="label">Del</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">50</property>
                         <property name="height_request">40</property>
@@ -740,7 +740,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Return">
-                        <property name="label" translatable="yes">Return</property>
+                        <property name="label">Return</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">140</property>
                         <property name="height_request">40</property>
@@ -756,7 +756,7 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="b_K_Home">
-                        <property name="label" translatable="yes">Home</property>
+                        <property name="label">Home</property>
                         <property name="use_action_appearance">False</property>
                         <property name="width_request">40</property>
                         <property name="height_request">40</property>
@@ -894,7 +894,7 @@
                         <property name="can_focus">False</property>
                         <property name="margin_left">5</property>
                         <property name="margin_right">5</property>
-                        <property name="label" translatable="yes">$</property>
+                        <property name="label">$</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
