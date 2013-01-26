@@ -23,15 +23,15 @@
 
 /* Statusbar messages */
 
-#define READY_MESSAGE           "Ready to party!"
-#define INCORRECT_DATA_MESSAGE  "Incorrect data!"
-#define CONNECTED_MESSAGE       "Connected."
-#define DISCONNECTED_MESSAGE    "Disconnected."
+#define READY_MESSAGE           _("Ready to party!")
+#define INCORRECT_DATA_MESSAGE  _("Incorrect data!")
+#define CONNECTED_MESSAGE       _("Connected.")
+#define DISCONNECTED_MESSAGE    _("Disconnected.")
 
-#define STATUS_EMPTY_FIELDS     "Status:\nEmpty field(s)!"
-#define STATUS_CONNECTED        "Status:\nConnected"
-#define STATUS_DISCONNECTED     "Status:\nDisconnected"
-#define STATUS_ERROR            "Status:\nError!!!"
+#define STATUS_EMPTY_FIELDS     _("Status:\nEmpty field(s)!")
+#define STATUS_CONNECTED        _("Status:\nConnected")
+#define STATUS_DISCONNECTED     _("Status:\nDisconnected")
+#define STATUS_ERROR            _("Status:\nError!!!")
 
 /* Handlers */
 

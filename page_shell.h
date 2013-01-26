@@ -13,8 +13,8 @@
 
 /* Statusbar messages */
 
-#define DONE_MESSAGE                    "Done!"
-#define ENTER_COMMAND_MESSAGE           "Enter command first!"
+#define DONE_MESSAGE                    _("Done!")
+#define ENTER_COMMAND_MESSAGE           _("Enter command first!")
 
 /* Handlers */
 

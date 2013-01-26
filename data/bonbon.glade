@@ -1071,7 +1071,6 @@
                 <property name="can_focus">True</property>
                 <property name="invisible_char">•</property>
                 <property name="width_chars">22</property>
-                <property name="text" translatable="yes">:0.0</property>
               </object>
               <packing>
                 <property name="x">140</property>

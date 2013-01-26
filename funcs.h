@@ -3,14 +3,23 @@
 
 #include <gtk/gtk.h>
 
+/* Gettext */
+
+#include <libintl.h>
+#define _(str)                          gettext(str)
+#define gettext_noop(str)               str
+#define N_(str)                         gettext_noop(str)
+#define GETTEXT_PACKAGE                 "bonbon"
+#define LOCALEDIR                       "locale"
+
 /* Files */
 
 #define CONFIG_FILE_NAME                "data/bonbon.conf"
 
 /* Statusbar messages */
 
-#define SOME_ERROR_MESSAGE              "Oops! There is some error here! :)"
-#define OFFLINE_MESSAGE                 "You are offline!"
+#define SOME_ERROR_MESSAGE              _("Oops! There is some error here! :)")
+#define OFFLINE_MESSAGE                 _("You are offline!")
 
 /* Strings */
 
