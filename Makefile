@@ -2,8 +2,8 @@ VERSION = 0.5
 
 CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Ofast -m64 -flto $(shell pkg-config gtk+-3.0 --cflags)
-LDFLAGS = -s $(shell pkg-config gtk+-3.0 --libs)
+CFLAGS = -Wall -g $(shell pkg-config gtk+-3.0 --cflags)
+LDFLAGS = $(shell pkg-config gtk+-3.0 --libs)
 
 SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c \
           page_shell.c preferences.c
