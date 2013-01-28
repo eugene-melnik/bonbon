@@ -1,21 +1,19 @@
-# Bonbon localization 
-# Copyright (C) 2013 THE 0.5'S COPYRIGHT HOLDER
+# Bonbon english translate.
 # This file is distributed under the same license as the Bonbon package.
 # eugene <jeka7js@gmail.com>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.5\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-26 23:07+0200\n"
-"PO-Revision-Date: 2013-01-26 23:12+0200\n"
-"Last-Translator: eugene <jeka7js@gmail.com>\n"
-"Language-Team: English\n"
+"Report-Msgid-Bugs-To: <jeka7js@gmail.com>\n"
+"POT-Creation-Date: 2013-01-28 18:00+0200\n"
+"PO-Revision-Date: 2013-01-28 18:00+0200\n"
+"Last-Translator: Melnik Eugene <jeka7js@gmail.com>\n"
+"Language-Team: Melnik Eugene <jeka7js@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: bonbon.glade.h:1
 msgid "About Bonbon"
