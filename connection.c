@@ -8,15 +8,10 @@
 FILE * open_connection(char * hostname, char * username, char * password)
 {
     char * command = (char *) malloc(COMMAND_BUFFER_SIZE);
-    sprintf(command, LOGIN_SCRIPT, username, hostname);
+    //sprintf(command, LOGIN_SCRIPT, username, hostname);
+    sprintf(command, LOGIN_SCRIPT, hostname, username, password);
     FILE * pipe = popen(command, "w");
-
-    if (!strcmp(password, EMPTY_STRING))
-    {
-        sleep(1);
-        fputs(password, pipe);
-        fputs("\n", pipe);
-    }
+    fputs("ls\n", pipe);
 
     free(command);
     return pipe;

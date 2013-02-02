@@ -22,8 +22,9 @@ all: $(LANGS) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(EXECUTABLE)
 
-en: en.po
-	msgfmt en.po -o locale/en/LC_MESSAGES/en.mo
+en: po/en.po
+	mkdir -p locale/en/LC_MESSAGES
+	msgfmt po/en.po -o locale/en/LC_MESSAGES/en.mo
 
 bonbon.o: bonbon.c bonbon.h funcs.h connection.h page_connection.h \
           page_keyboard.h page_shell.h preferences.h

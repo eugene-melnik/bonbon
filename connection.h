@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define LOGIN_SCRIPT                    "ssh -TX %s@%s > /dev/null\n"
+#define LOGIN_SCRIPT                    "expect ./data/script.sh \"%s\" \"%s\" \"%s\""
 
 FILE * open_connection(char *, char *, char *);
 void close_connection(FILE *);
