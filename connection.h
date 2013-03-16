@@ -5,11 +5,11 @@
 
 #define LOGIN_SCRIPT                    "expect ./data/script.sh \"%s\" \"%s\" \"%s\""
 
-FILE * open_connection(char *, char *, char *);
-void close_connection(FILE *);
+FILE* open_connection( char*, char*, char* );
+void close_connection( FILE* );
 
-char * execute_command(FILE *, const char *);
-int send_key(FILE *, const char *);
+char* execute_command( FILE*, const char* );
+int send_key( FILE*, const char* );
 
 #endif // CONNECTION_H_INCLUDED
 

@@ -4,7 +4,6 @@
 #include <gtk/gtk.h>
 
 /* Objects (in XML) */
-
 #define MAIN_WINDOW_NAME        "main_window"
 #define CONNECT_BUTTON_NAME     "b_Connect"
 #define BOX_RESULT_NAME         "box_Result"
@@ -22,7 +21,6 @@
 #define PASSWORD_CFG            "password"
 
 /* Statusbar messages */
-
 #define READY_MESSAGE           _("Ready to party!")
 #define INCORRECT_DATA_MESSAGE  _("Incorrect data!")
 #define CONNECTED_MESSAGE       _("Connected.")
@@ -34,13 +32,10 @@
 #define STATUS_ERROR            _("Status:\nError!!!")
 
 /* Handlers */
-
 int page_connection_bind(GtkBuilder *);
-
 void on_create(GtkWindow *, GtkButton *);
 void on_destroy(GtkWindow *, GtkButton *);
 void b_Connect_clicked(GtkButton *, GtkBox *);
-
 void * connect_thread(void *);
 
 #endif // PAGE_CONNECTION_H_INCLUDED

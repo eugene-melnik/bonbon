@@ -4,7 +4,6 @@
 #include <gtk/gtk.h>
 
 /* Gettext */
-
 #include <libintl.h>
 #define _(str)                          gettext(str)
 #define gettext_noop(str)               str
@@ -13,16 +12,13 @@
 #define LOCALEDIR                       "locale"
 
 /* Files */
-
 #define CONFIG_FILE_NAME                "data/bonbon.conf"
 
 /* Statusbar messages */
-
 #define SOME_ERROR_MESSAGE              _("Oops! There is some error here! :)")
 #define OFFLINE_MESSAGE                 _("You are offline!")
 
 /* Strings */
-
 #define EMPTY_STRING                    ""
 #define NOTHING_STRING                  "-"
 #define END_OF_LINE                     "\n"
@@ -31,12 +27,10 @@
 #define END_OF_STRING                   '\0'
 
 /* Global constants */
-
 #define COMMAND_BUFFER_SIZE             2 * 1024 * sizeof(char)  // 2KiB
 #define THREAD_STACK_SIZE               64 * 1024  // 64KiB
 
 /* Global variables */
-
 typedef struct global_t {
     char * hostname;
     char * username;
@@ -52,7 +46,6 @@ typedef struct global_t {
 global_t global;
 
 /* Global functions */
-
 void show_in_statusbar(const char *);
 void entry_edited(GtkEntry *, char **);
 void combo_changed(GtkComboBoxText *, char **);

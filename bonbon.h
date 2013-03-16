@@ -9,7 +9,6 @@
 #include "funcs.h"
 
 /* Files */
-
 #define GLADE_FILE_NAME         "data/bonbon.glade"
 
 #endif // BONBON_H_INCLUDED

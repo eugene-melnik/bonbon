@@ -1,3 +1,6 @@
 bonbon-*
 *.o
 locale
+bonbon.cbp
+bonbon.layout
+

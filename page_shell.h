@@ -4,7 +4,6 @@
 #include <gtk/gtk.h>
 
 /* Objects (in XML) */
-
 #define LABEL_ACCESS_NAME               "l_Access"
 #define ENTRY_COMMAND_NAME              "e_Shell"
 #define BUTTON_EXECUTE_NAME             "b_Execute"
@@ -12,12 +11,10 @@
 #define TEXT_VIEW_SHELL_NAME            "text_Shell"
 
 /* Statusbar messages */
-
 #define DONE_MESSAGE                    _("Done!")
 #define ENTER_COMMAND_MESSAGE           _("Enter command first!")
 
 /* Handlers */
-
 int page_shell_bind(GtkBuilder *);
 void b_Execute_clicked(GtkButton *, gpointer);
 
