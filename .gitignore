@@ -1,7 +1,5 @@
-bonbon
-bonbon-*
 *.o
-locale
+bonbon
 bonbon.cbp
 bonbon.layout
 

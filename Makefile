@@ -1,5 +1,3 @@
-VERSION = 0.5
-
 CC = gcc
 RM = rm -rf
 CFLAGS = -Wall -g $(shell pkg-config gtk+-3.0 --cflags)
@@ -11,7 +9,7 @@ SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c \
 OBJS = bonbon.o funcs.o connection.o page_connection.o page_keyboard.o \
        page_shell.o preferences.o
 
-EXECUTABLE = bonbon-$(VERSION)
+EXECUTABLE = bonbon
 
 all: $(LANGS) $(EXECUTABLE)
 
@@ -41,4 +39,4 @@ preferences.o: preferences.c preferences.h funcs.h
 	$(CC) $(CFLAGS) -c preferences.c
 
 clean:
-	$(RM) $(OBJS) $(EXECUTABLE) $(LOCALE_DIR)
+	$(RM) $(OBJS) $(EXECUTABLE)
