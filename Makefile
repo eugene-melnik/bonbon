@@ -5,15 +5,11 @@ RM = rm -rf
 CFLAGS = -Wall -g $(shell pkg-config gtk+-3.0 --cflags)
 LDFLAGS = $(shell pkg-config gtk+-3.0 --libs)
 
-LOCALE_DIR = locale
-
 SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c \
           page_shell.c preferences.c
 
 OBJS = bonbon.o funcs.o connection.o page_connection.o page_keyboard.o \
        page_shell.o preferences.o
-
-LANGS = en
 
 EXECUTABLE = bonbon-$(VERSION)
 
@@ -21,10 +17,6 @@ all: $(LANGS) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $(EXECUTABLE)
-
-en: po/en.po
-	mkdir -p locale/en/LC_MESSAGES
-	msgfmt po/en.po -o locale/en/LC_MESSAGES/en.mo
 
 bonbon.o: bonbon.c bonbon.h funcs.h connection.h page_connection.h \
           page_keyboard.h page_shell.h preferences.h
