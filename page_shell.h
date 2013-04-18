@@ -1,22 +1,22 @@
 #ifndef PAGE_SHELL_H_INCLUDED
 #define PAGE_SHELL_H_INCLUDED
 
+/* Headers */
 #include <gtk/gtk.h>
 
 /* Objects (in XML) */
 #define LABEL_ACCESS_NAME               "l_Access"
 #define ENTRY_COMMAND_NAME              "e_Shell"
-#define BUTTON_EXECUTE_NAME             "b_Execute"
 #define TEXT_BUFFER_SHELL_NAME          "text_buffer_Shell"
 #define TEXT_VIEW_SHELL_NAME            "text_Shell"
 
 /* Statusbar messages */
-#define DONE_MESSAGE                    _("Done!")
-#define ENTER_COMMAND_MESSAGE           _("Enter command first!")
+#define DONE_MESSAGE                    "Done!"
+#define ENTER_COMMAND_MESSAGE           "Enter command first!"
 
 /* Handlers */
-int page_shell_bind(GtkBuilder *);
-void b_Execute_clicked(GtkButton *, gpointer);
+void page_shell_bind( GtkBuilder* builder );
+G_MODULE_EXPORT void b_Execute_clicked( GtkWidget* widget, gpointer data );
 
 #endif // PAGE_SHELL_H_INCLUDED
 

@@ -1,15 +1,15 @@
 #ifndef CONNECTION_H_INCLUDED
 #define CONNECTION_H_INCLUDED
 
+/* Headers */
 #include <stdio.h>
 
-#define LOGIN_SCRIPT                    "expect ./data/script.sh \"%s\" \"%s\" \"%s\""
+/* Handlers */
+int open_connection( char* hostname, char* username, char* password );
+void close_connection();
 
-FILE* open_connection( char*, char*, char* );
-void close_connection( FILE* );
-
-char* execute_command( FILE*, const char* );
-int send_key( FILE*, const char* );
+int execute_command( const char* command, char** result );
+int send_key( const char* key );
 
 #endif // CONNECTION_H_INCLUDED
 

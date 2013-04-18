@@ -1,10 +1,11 @@
-#include <stdlib.h>
 #include "preferences.h"
 #include "funcs.h"
 
+#include <stdlib.h>
+
 extern global_t global;
 
-int preferences_window_bind( GtkBuilder* builder )
+void preferences_window_bind( GtkBuilder* builder )
 {
     /* Objects */
     GtkWidget* check_Save_login_data = GTK_WIDGET( gtk_builder_get_object( builder, CHECK_SAVE_DATA ) );
@@ -17,7 +18,5 @@ int preferences_window_bind( GtkBuilder* builder )
     /* Actions */
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( check_Save_login_data ), global.save_login_data );
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( check_Auto_login ), global.auto_connect );
-
-    return( EXIT_SUCCESS );
 }
 

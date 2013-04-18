@@ -1,56 +1,50 @@
 #ifndef FUNCS_H_INCLUDED
 #define FUNCS_H_INCLUDED
 
+/* Headers */
+#include <libssh/libssh.h>
 #include <gtk/gtk.h>
-
-/* Gettext */
-#include <libintl.h>
-#define _(str)                          gettext(str)
-#define gettext_noop(str)               str
-#define N_(str)                         gettext_noop(str)
-#define GETTEXT_PACKAGE                 "bonbon"
-#define LOCALEDIR                       "locale"
 
 /* Files */
 #define CONFIG_FILE_NAME                "data/bonbon.conf"
 
 /* Statusbar messages */
-#define SOME_ERROR_MESSAGE              _("Oops! There is some error here! :)")
-#define OFFLINE_MESSAGE                 _("You are offline!")
+#define SOME_ERROR_MESSAGE              "Oops! There is some error here! :)"
+#define OFFLINE_MESSAGE                 "You are offline!"
 
 /* Strings */
 #define EMPTY_STRING                    ""
 #define NOTHING_STRING                  "-"
 #define END_OF_LINE                     "\n"
-#define PLUS_S                          "+"
-
 #define END_OF_STRING                   '\0'
 
 /* Global constants */
-#define COMMAND_BUFFER_SIZE             2 * 1024 * sizeof(char)  // 2KiB
-#define THREAD_STACK_SIZE               64 * 1024  // 64KiB
+#define COMMAND_BUFFER_SIZE             1024 * sizeof(char)  // 1KiB
 
 /* Global variables */
-typedef struct global_t {
-    char * hostname;
-    char * username;
-    char * password;
-    FILE * main_pipe;
-    int auto_connect;
-    int is_connected;
-    int save_login_data;
-    GtkStatusbar * statusbar;
-    GError * error_msg;
+typedef struct {
+    char*         hostname;         /* host name or computer's IP */
+    char*         username;         /* user's name on remote computer */
+    char*         password;         /* user's password */
+
+    char*         x_display;
+    int           send_delay;
+    int           auto_connect;
+    int           is_connected;
+    int           save_login_data;
+    GError*       error_msg;
+    GtkStatusbar* statusbar;
+    ssh_session   session;
 } global_t;
 
 global_t global;
 
 /* Global functions */
-void show_in_statusbar(const char *);
-void entry_edited(GtkEntry *, char **);
-void combo_changed(GtkComboBoxText *, char **);
-void check_button_activate(GtkCheckButton *, int *);
-int remove_children(GtkContainer *);
+void show_in_statusbar( const char* message );
+void entry_edited( GtkEntry* entry, char** destination );
+void combo_changed( GtkComboBoxText* combobox, char** destination );
+void check_button_activate( GtkCheckButton* button, int* destination );
+void remove_children( GtkContainer* container );
 
 #endif // FUNCS_H_INCLUDED
 
