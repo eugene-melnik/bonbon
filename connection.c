@@ -95,7 +95,6 @@ int send_key( const char* key )
 {
     char command[ 128 ];
     sprintf( command, "DISPLAY=%s xdotool key %s", global.x_display, key );
-    g_print( "%s\n", command );
     return( execute_command( command, NULL ) );
 }
 
