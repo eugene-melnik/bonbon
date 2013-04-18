@@ -107,7 +107,7 @@ gpointer connect_thread( gpointer button )
     GtkWidget* label = NULL;
 
     if( !strcmp( global.hostname, EMPTY_STRING ) || !strcmp( global.username, EMPTY_STRING ) ) {
-        ///gdk_threads_enter();
+        gdk_threads_enter();
         show_in_statusbar( INCORRECT_DATA_MESSAGE );
         label = gtk_label_new( STATUS_EMPTY_FIELDS );
     }
@@ -118,13 +118,13 @@ gpointer connect_thread( gpointer button )
         {
             global.is_connected = TRUE;
 
-            ///gdk_threads_enter();
+            gdk_threads_enter();
             /* TODO: Make entries editable property off */
             show_in_statusbar( CONNECTED_MESSAGE );
             label = gtk_label_new( STATUS_CONNECTED );
             gtk_button_set_label( GTK_BUTTON( button ), "gtk-disconnect" );
         } else {
-            ///gdk_threads_enter();
+            gdk_threads_enter();
             label = gtk_label_new( STATUS_ERROR );
             show_in_statusbar( SOME_ERROR_MESSAGE );
         }
@@ -133,7 +133,7 @@ gpointer connect_thread( gpointer button )
         close_connection( global.session );
         global.is_connected = FALSE;
 
-        ///gdk_threads_enter();
+        gdk_threads_enter();
         show_in_statusbar( DISCONNECTED_MESSAGE );
         label = gtk_label_new( STATUS_DISCONNECTED );
         gtk_button_set_label( GTK_BUTTON( button ), "gtk-connect" );
@@ -143,7 +143,7 @@ gpointer connect_thread( gpointer button )
     gtk_box_pack_start( resultbox, GTK_WIDGET( label ), TRUE, TRUE, 1 );
     gtk_widget_show_all( GTK_WIDGET( resultbox ) );
     gtk_widget_set_sensitive( GTK_WIDGET( button ), TRUE );
-    ///gdk_threads_leave();
+    gdk_threads_leave();
 
     return( NULL );
 }
