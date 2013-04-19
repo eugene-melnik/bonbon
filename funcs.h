@@ -8,16 +8,6 @@
 /* Files */
 #define CONFIG_FILE_NAME                "data/bonbon.conf"
 
-/* Statusbar messages */
-#define SOME_ERROR_MESSAGE              "Oops! There is some error here! :)"
-#define OFFLINE_MESSAGE                 "You are offline!"
-
-/* Strings */
-#define EMPTY_STRING                    ""
-#define NOTHING_STRING                  "-"
-#define END_OF_LINE                     "\n"
-#define END_OF_STRING                   '\0'
-
 /* Global constants */
 #define COMMAND_BUFFER_SIZE             1024 * sizeof(char)  // 1KiB
 

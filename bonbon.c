@@ -9,6 +9,12 @@
 
 #include <gtk/gtk.h>
 
+/*****************************************************************************
+ *  Entry point.                                                              *
+ ******************************************************************************
+ *  Initializing, loading interface from file and connecting signals.         *
+  *****************************************************************************/
+
 int main( int argc, char** argv )
 {
     /* GTK initialization */

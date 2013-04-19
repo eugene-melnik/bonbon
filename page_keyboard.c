@@ -1,5 +1,7 @@
 #include "page_keyboard.h"
+#include "grab_keyboard.h"
 #include "connection.h"
+#include "strings.h"
 #include "funcs.h"
 
 #include <string.h>
@@ -12,13 +14,15 @@ char* key2 = NULL;
 char* key3 = NULL;
 char* key_seq = NULL;
 
+GtkWidget* entry_Key_sequence;
+
 void page_keyboard_bind( GtkBuilder* builder )
 {
     /* Objects */
     GtkWidget* combo_Key1 = GTK_WIDGET( gtk_builder_get_object( builder, COMBO_KEY1 ) );
     GtkWidget* combo_Key2 = GTK_WIDGET( gtk_builder_get_object( builder, COMBO_KEY2 ) );
     GtkWidget* entry_Key3 = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_KEY3 ) );
-    GtkWidget* entry_Key_sequence = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_KEY_SEQ ) );
+    entry_Key_sequence = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_KEY_SEQ ) );
 
     /* Signals */
     g_signal_connect( combo_Key1, "changed", G_CALLBACK( combo_changed ), &key1 );
@@ -48,12 +52,20 @@ G_MODULE_EXPORT void multiply_keys( GtkButton* button, gpointer data )
 G_MODULE_EXPORT void key_sequence( GtkButton* button, gpointer data )
 {
     if( global.is_connected ) {
-        char* key_name = strtok( key_seq, " " );
+        if( key_seq != NULL ) {
+            char* key_name = strtok( key_seq, " " );
 
-        while( key_name != NULL ) {
-            send_key( key_name );
-            key_name = strtok( NULL, " " );
-            usleep( global.send_delay );
+            while( key_name != NULL ) {
+                send_key( key_name );
+                key_name = strtok( NULL, " " );
+                usleep( global.send_delay );
+            }
+
+            gtk_entry_buffer_delete_text( gtk_entry_get_buffer( GTK_ENTRY( entry_Key_sequence ) ), 0, 20 );
+            show_in_statusbar( DONE_MESSAGE );
+            key_seq = NULL;
+        } else {
+            show_in_statusbar( "Enter sequence first!" );
         }
     } else {
         show_in_statusbar( OFFLINE_MESSAGE );
@@ -64,8 +76,8 @@ G_MODULE_EXPORT void key_pressed( GtkButton* button, gpointer data )
 {
     if( global.is_connected ) {
         const char* type = gtk_button_get_label( button );
-        send_key( type );
         show_in_statusbar( type );
+        send_key( type );
     } else {
         show_in_statusbar( OFFLINE_MESSAGE );
     }
@@ -74,7 +86,9 @@ G_MODULE_EXPORT void key_pressed( GtkButton* button, gpointer data )
 G_MODULE_EXPORT void grab_keys( GtkButton* button, gpointer data )
 {
     if( global.is_connected ) {
-        g_print( "Keyboard grab! :D Don't work yet...\n" );
+        show_in_statusbar( "GRABING" );
+        window_grab_start();
+        //g_thread_new( "grab_thread", window_grab_start, NULL );
     } else {
         show_in_statusbar( OFFLINE_MESSAGE );
     }

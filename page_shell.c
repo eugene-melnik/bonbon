@@ -1,5 +1,6 @@
 #include "page_shell.h"
 #include "connection.h"
+#include "strings.h"
 #include "funcs.h"
 
 #include <stdlib.h>

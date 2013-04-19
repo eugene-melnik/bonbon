@@ -1,4 +1,5 @@
 #include "connection.h"
+#include "strings.h"
 #include "errors.h"
 #include "funcs.h"
 
@@ -7,14 +8,17 @@
 #include <string.h>
 
 extern global_t global;
-ssh_channel channel;
+
+/*****************************************************************************
+ *  Creating session and authenticate user.                                   *
+  *****************************************************************************/
 
 int open_connection( char* hostname, char* username, char* password )
 {
     /* Creating session */
     global.session = ssh_new();
     if( global.session == NULL ) {
-        g_warning( "Error while creating session..." );
+        g_warning( STR_ERROR_CREATING_SESSION );
         return( CONNECTION_SESSION_CREATE_ERROR );
     }
 
@@ -22,15 +26,16 @@ int open_connection( char* hostname, char* username, char* password )
     ssh_options_set( global.session, SSH_OPTIONS_HOST, hostname );
     ssh_options_set( global.session, SSH_OPTIONS_USER, username );
     if( ssh_connect( global.session ) != SSH_OK ) {
-        g_warning( "Error while connecting..." );
+        g_warning( STR_ERROR_CONNECTION );
         ssh_free( global.session );
         return( CONNECTION_SESSION_CONNECT_ERROR );
     }
 
     /* Authenticate with keys */
     if( !strcmp( password, EMPTY_STRING ) ) {
+        /* FIXME: Don't works. */
         if( ssh_userauth_password( global.session, NULL, NULL ) != SSH_OK ) {
-            g_warning( "Authentication error (without password)..." );
+            g_warning( STR_ERROR_AUTHENTICATE );
             ssh_disconnect( global.session );
             ssh_free( global.session );
             return( CONNECTION_SESSION_AUTH_ERROR );
@@ -38,7 +43,7 @@ int open_connection( char* hostname, char* username, char* password )
     } else
     /* Authenticate with password */
     if( ssh_userauth_password( global.session, NULL, password ) != SSH_OK ) {
-        g_warning( "Authentication error..." );
+        g_warning( STR_ERROR_AUTHENTICATE_PASS );
         ssh_disconnect( global.session );
         ssh_free( global.session );
         return( CONNECTION_SESSION_AUTH_ERROR );
@@ -47,17 +52,24 @@ int open_connection( char* hostname, char* username, char* password )
     return( SUCCESS );
 }
 
+/*****************************************************************************
+ *  Disconnecting from the remote host.                                       *
+  *****************************************************************************/
+
 void close_connection()
 {
-    /* Closing connection */
     ssh_disconnect( global.session );
     ssh_free( global.session );
 }
 
+/*****************************************************************************
+ *  Opening channel and sending command to the remote host.                   *
+  *****************************************************************************/
+
 int execute_command( const char* command, char** result )
 {
-    /* Opening channel and session in it */
-    channel = ssh_channel_new( global.session );
+    /* Creating channel and opening session */
+    ssh_channel channel = ssh_channel_new( global.session );
     if( channel == NULL ) {
         g_warning( "Opening channel error..." );
         ssh_disconnect( global.session );
@@ -90,6 +102,10 @@ int execute_command( const char* command, char** result )
     ssh_channel_free( channel );
     return( SUCCESS );
 }
+
+/*****************************************************************************
+ *  Formatting command and sending it to the remote host.                     *
+  *****************************************************************************/
 
 int send_key( const char* key )
 {

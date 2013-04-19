@@ -11,7 +11,6 @@
 #define TEXT_VIEW_SHELL_NAME            "text_Shell"
 
 /* Statusbar messages */
-#define DONE_MESSAGE                    "Done!"
 #define ENTER_COMMAND_MESSAGE           "Enter command first!"
 
 /* Handlers */

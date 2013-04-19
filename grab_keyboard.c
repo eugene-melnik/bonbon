@@ -10,3 +10,4 @@ int window_grab_start()
 {
     return( SUCCESS );
 }
+

@@ -1,5 +1,7 @@
 #include "page_connection.h"
 #include "connection.h"
+#include "strings.h"
+#include "errors.h"
 #include "funcs.h"
 
 #include <unistd.h>
@@ -114,19 +116,37 @@ gpointer connect_thread( gpointer button )
     else if( !global.is_connected )
     {
         /* Connecting */
-        if( ( open_connection( global.hostname, global.username, global.password) ) == 0 )
+        int result = open_connection( global.hostname, global.username, global.password );
+
+        if( result == SUCCESS )
         {
             global.is_connected = TRUE;
 
             gdk_threads_enter();
-            /* TODO: Make entries editable property off */
+
+            gtk_widget_set_sensitive( e_Username, FALSE );
+            gtk_widget_set_sensitive( e_Hostname, FALSE );
+            gtk_widget_set_sensitive( e_Password, FALSE );
+
             show_in_statusbar( CONNECTED_MESSAGE );
             label = gtk_label_new( STATUS_CONNECTED );
             gtk_button_set_label( GTK_BUTTON( button ), "gtk-disconnect" );
         } else {
             gdk_threads_enter();
             label = gtk_label_new( STATUS_ERROR );
-            show_in_statusbar( SOME_ERROR_MESSAGE );
+
+            char* text = SOME_ERROR_MESSAGE;
+
+            switch( result ) {
+                case CONNECTION_SESSION_CREATE_ERROR:
+                    text = STR_ERROR_CREATING_SESSION; break;
+                case CONNECTION_SESSION_CONNECT_ERROR:
+                    text = STR_ERROR_CONNECTION; break;
+                case CONNECTION_SESSION_AUTH_ERROR:
+                    text = STR_ERROR_AUTHENTICATE_PASS; break;
+            }
+
+            show_in_statusbar( text );
         }
     } else {
         /* Disconnecting */
@@ -134,6 +154,11 @@ gpointer connect_thread( gpointer button )
         global.is_connected = FALSE;
 
         gdk_threads_enter();
+
+        gtk_widget_set_sensitive( e_Username, TRUE );
+        gtk_widget_set_sensitive( e_Hostname, TRUE );
+        gtk_widget_set_sensitive( e_Password, TRUE );
+
         show_in_statusbar( DISCONNECTED_MESSAGE );
         label = gtk_label_new( STATUS_DISCONNECTED );
         gtk_button_set_label( GTK_BUTTON( button ), "gtk-connect" );

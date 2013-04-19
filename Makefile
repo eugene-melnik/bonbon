@@ -22,19 +22,19 @@ bonbon.o: bonbon.c bonbon.h funcs.h connection.h page_connection.h \
           page_keyboard.h page_shell.h preferences.h errors.h
 	$(CC) $(CFLAGS) -c bonbon.c
 
-funcs.o: funcs.c funcs.h
+funcs.o: funcs.c funcs.h strings.h
 	$(CC) $(CFLAGS) -c funcs.c
 
-connection.o: connection.c connection.h funcs.h errors.h
+connection.o: connection.c connection.h funcs.h errors.h strings.h
 	$(CC) $(CFLAGS) -c connection.c
 
-page_connection.o: page_connection.c page_connection.h funcs.h
+page_connection.o: page_connection.c page_connection.h funcs.h strings.h
 	$(CC) $(CFLAGS) -c page_connection.c
 
-page_keyboard.o: page_keyboard.c page_keyboard.h funcs.h
+page_keyboard.o: page_keyboard.c page_keyboard.h funcs.h strings.h
 	$(CC) $(CFLAGS) -c page_keyboard.c
 
-page_shell.o: page_shell.c page_shell.h funcs.h
+page_shell.o: page_shell.c page_shell.h funcs.h strings.h
 	$(CC) $(CFLAGS) -c page_shell.c
 
 preferences.o: preferences.c preferences.h funcs.h
