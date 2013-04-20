@@ -83,14 +83,3 @@ G_MODULE_EXPORT void key_pressed( GtkButton* button, gpointer data )
     }
 }
 
-G_MODULE_EXPORT void grab_keys( GtkButton* button, gpointer data )
-{
-    if( global.is_connected ) {
-        show_in_statusbar( "GRABING" );
-        window_grab_start();
-        //g_thread_new( "grab_thread", window_grab_start, NULL );
-    } else {
-        show_in_statusbar( OFFLINE_MESSAGE );
-    }
-}
-

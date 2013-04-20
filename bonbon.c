@@ -1,5 +1,6 @@
 #include "page_connection.h"
 #include "page_keyboard.h"
+#include "grab_keyboard.h"
 #include "preferences.h"
 #include "page_shell.h"
 #include "connection.h"
@@ -34,6 +35,7 @@ int main( int argc, char** argv )
     page_keyboard_bind( builder );
     page_shell_bind( builder );
     preferences_window_bind( builder );
+    grab_window_bind( builder );
 
     /* Signals */
     gtk_builder_connect_signals( builder, NULL );

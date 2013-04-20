@@ -16,7 +16,6 @@ void page_keyboard_bind( GtkBuilder* builder );
 G_MODULE_EXPORT void multiply_keys( GtkButton* button, gpointer data );
 G_MODULE_EXPORT void key_sequence( GtkButton* button, gpointer data );
 G_MODULE_EXPORT void key_pressed( GtkButton* button, gpointer data );
-G_MODULE_EXPORT void grab_keys( GtkButton* button, gpointer data );
 
 #endif // PAGE_KEYBOARD_H_INCLUDED
 
