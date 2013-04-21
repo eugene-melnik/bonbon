@@ -4,8 +4,10 @@
 #include "errors.h"
 #include "funcs.h"
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 
 extern global_t global;
 
@@ -77,7 +79,35 @@ G_MODULE_EXPORT void on_create( GtkWindow* window, GtkButton* b_Connect )
 
 G_MODULE_EXPORT void on_destroy( GtkWindow* window, GtkButton* b_Connect )
 {
-    if( global.is_connected) close_connection();
+    /* Disconnecting */
+    if( global.is_connected) {
+        close_connection();
+    }
+
+    /* Saving config */
+    GKeyFile* config_keyfile = g_key_file_new();
+    g_key_file_set_string( config_keyfile, GROUP_PREFS, X_DISPLAY_CFG, global.x_display );
+    g_key_file_set_integer( config_keyfile, GROUP_PREFS, SEND_DELAY_CFG, global.send_delay );
+    g_key_file_set_boolean( config_keyfile, GROUP_PREFS, SAVE_LOGIN_CFG, global.save_login_data );
+    g_key_file_set_boolean( config_keyfile, GROUP_PREFS, AUTO_CONNECT_CFG, global.auto_connect );
+
+    if( global.save_login_data ) {
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, global.hostname );
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, USERNAME_CFG, global.username );
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, PASSWORD_CFG, global.password );
+    } else {
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, "" );
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, USERNAME_CFG, "" );
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, PASSWORD_CFG, "" );
+    }
+
+    char* config = g_key_file_to_data( config_keyfile, NULL, &global.error_msg );
+    FILE* f = fopen( CONFIG_FILE_NAME, "w" );
+    fwrite( config, 1, strlen(config), f );
+    free(config);
+    fclose( f );
+
+    /* Exit */
     gtk_main_quit();
 }
 

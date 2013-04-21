@@ -17,7 +17,7 @@ void show_in_statusbar( const char* message )
 }
 
 /*****************************************************************************
- *  Entries handler                                                           *
+ *  Entries handlers                                                          *
   *****************************************************************************/
 
 void entry_edited( GtkEntry* entry, char** destination )
@@ -28,6 +28,12 @@ void entry_edited( GtkEntry* entry, char** destination )
 
     GtkEntryBuffer* entry_buffer = gtk_entry_get_buffer( entry );
     *destination = strdup( gtk_entry_buffer_get_text( entry_buffer ) );
+}
+
+void entry_edited_dig( GtkEntry* entry, int* destination )
+{
+    GtkEntryBuffer* entry_buffer = gtk_entry_get_buffer( entry );
+    *destination = atoi( gtk_entry_buffer_get_text( entry_buffer ) );
 }
 
 /*****************************************************************************

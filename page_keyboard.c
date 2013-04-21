@@ -34,16 +34,17 @@ void page_keyboard_bind( GtkBuilder* builder )
 G_MODULE_EXPORT void multiply_keys( GtkButton* button, gpointer data )
 {
     if( global.is_connected ) {
-        char key_sequence[100];// = EMPTY_STRING;
+        char keys[100];// = EMPTY_STRING;
 
-        if( key1 != NULL ) { sprintf( key_sequence, "%s+", key1 ); }
-        if( key2 != NULL ) { strcat( key_sequence, key2 ); strcat( key_sequence, "+" ); }
-        if( key3 != NULL ) { strcat( key_sequence, key3 ); }
-        else if( strlen( key_sequence ) != 0 ) {
-            key_sequence[ strlen( key_sequence ) - 1 ] = END_OF_STRING;
+        if( key1 != NULL ) { sprintf( keys, "%s+", key1 ); }
+        if( key2 != NULL ) { strcat( keys, key2 ); strcat( keys, "+" ); }
+        if( key3 != NULL ) { strcat( keys, key3 ); }
+        else if( strlen( keys ) != 0 ) {
+            keys[ strlen( keys ) - 1 ] = END_OF_STRING;
         }
 
-        send_key( key_sequence );
+        show_in_statusbar( keys );
+        send_key( keys );
     } else {
         show_in_statusbar( OFFLINE_MESSAGE );
     }

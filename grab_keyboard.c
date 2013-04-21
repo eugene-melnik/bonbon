@@ -66,7 +66,9 @@ G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, Gtk
         if( command[ strlen(command) - 1] == '+' ) {
             command[ strlen(command) - 1] = END_OF_STRING;
         }
+
         gtk_label_set_text( label_grab, command );
+        show_in_statusbar( command );
         send_key( command );
     }
 
