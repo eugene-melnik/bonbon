@@ -61,7 +61,7 @@ G_MODULE_EXPORT void key_sequence( GtkButton* button, gpointer data )
                 usleep( global.send_delay );
             }
 
-            gtk_entry_buffer_delete_text( gtk_entry_get_buffer( GTK_ENTRY( entry_Key_sequence ) ), 0, 20 );
+            gtk_entry_buffer_delete_text( gtk_entry_get_buffer( GTK_ENTRY( entry_Key_sequence ) ), 0, -1 );
             show_in_statusbar( DONE_MESSAGE );
             key_seq = NULL;
         } else {
