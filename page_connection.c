@@ -36,6 +36,7 @@ void page_connection_bind( GtkBuilder* builder )
 
     /* Actions */
     gtk_widget_show_all( GTK_WIDGET( main_window ) );
+    gtk_widget_grab_focus( e_Username );
 }
 
 /*****************************************************************************

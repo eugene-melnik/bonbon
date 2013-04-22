@@ -43,23 +43,27 @@
       </object>
     </child>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Delay"/>
-  <object class="GtkEntryBuffer" id="buffer_Hostname">
-    <property name="max_length">50</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_Password">
-    <property name="max_length">50</property>
-  </object>
-  <object class="GtkEntryBuffer" id="buffer_Username">
-    <property name="max_length">50</property>
-  </object>
   <object class="GtkEntryBuffer" id="buffer_Key3">
     <property name="max_length">1000</property>
   </object>
   <object class="GtkEntryBuffer" id="buffer_Key_sequence">
     <property name="max_length">10</property>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_X"/>
+  <object class="GtkEntryBuffer" id="buffer_Password">
+    <property name="max_length">40</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Username">
+    <property name="max_length">40</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Delay">
+    <property name="max_length">10</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_Hostname">
+    <property name="max_length">40</property>
+  </object>
+  <object class="GtkEntryBuffer" id="buffer_X">
+    <property name="max_length">10</property>
+  </object>
   <object class="GtkWindow" id="grab_window">
     <property name="width_request">320</property>
     <property name="height_request">240</property>

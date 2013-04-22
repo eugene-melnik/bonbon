@@ -1,6 +1,7 @@
 #include "grab_keyboard.h"
 #include "connection.h"
 #include "strings.h"
+#include "funcs.h"
 
 #include <gdk/gdkkeysyms.h>
 #include <string.h>
