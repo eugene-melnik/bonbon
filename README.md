@@ -1,6 +1,10 @@
-#bonbon (v0.9)
+bonbon
 
-##Remote control through ssh with xdotool
+=========================
+
+Remote control through ssh with xdotool
+
+=========================
 
 using packages:
  * gtk+-3.0
