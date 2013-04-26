@@ -34,7 +34,7 @@ void page_keyboard_bind( GtkBuilder* builder )
 G_MODULE_EXPORT void multiply_keys( GtkButton* button, gpointer data )
 {
     if( global.is_connected ) {
-        char keys[100];// = EMPTY_STRING;
+        char keys[100] = EMPTY_STRING;
 
         if( key1 != NULL ) { sprintf( keys, "%s+", key1 ); }
         if( key2 != NULL ) { strcat( keys, key2 ); strcat( keys, "+" ); }
