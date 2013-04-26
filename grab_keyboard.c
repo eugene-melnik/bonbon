@@ -6,17 +6,24 @@
 #include <gdk/gdkkeysyms.h>
 #include <string.h>
 
+extern global_t global;
+
 GtkLabel* label_grab;
 
 void grab_window_bind( GtkBuilder* builder )
 {
     /* Objects */
-    //GtkWindow* grab_window = GTK_WINDOW( gtk_builder_get_object( builder, GRAB_WINDOW_NAME ) );
     label_grab = GTK_LABEL( gtk_builder_get_object( builder, GRAB_LABEL_NAME ) );
 }
 
 G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
 {
+    if( !global.is_connected ) {
+        gtk_label_set_text( label_grab, OFFLINE_MESSAGE );
+        show_in_statusbar( OFFLINE_MESSAGE );
+        return( TRUE );
+    }
+
     char command[ 30 ] = "";
 
     /* Modificators */
@@ -77,6 +84,6 @@ G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, Gtk
         send_key( command );
     }
 
-    return FALSE;
+    return( FALSE );
 }
 

@@ -16,12 +16,12 @@ typedef struct {
     char*         hostname;         /* host name or computer's IP */
     char*         username;         /* user's name on remote computer */
     char*         password;         /* user's password */
-
     char*         x_display;
     int           send_delay;
     int           auto_connect;
     int           is_connected;
     int           save_login_data;
+    int           save_pass;
     GError*       error_msg;
     GtkStatusbar* statusbar;
     ssh_session   session;

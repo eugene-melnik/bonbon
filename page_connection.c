@@ -25,6 +25,7 @@ void page_connection_bind( GtkBuilder* builder )
     e_Username = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_USERNAME_NAME ) );
     e_Hostname = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_HOSTNAME_NAME ) );
     e_Password = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_PASSWORD_NAME ) );
+    GtkToggleButton* check_Save_pass = GTK_TOGGLE_BUTTON( gtk_builder_get_object( builder, CHECK_SAVE_PASS ) );
     global.statusbar = GTK_STATUSBAR( gtk_builder_get_object( builder, STATUSBAR_NAME ) );
     resultbox = GTK_BOX( gtk_builder_get_object( builder, BOX_RESULT_NAME ) );
 
@@ -33,10 +34,12 @@ void page_connection_bind( GtkBuilder* builder )
     g_signal_connect( e_Hostname, "changed", G_CALLBACK( entry_edited ), &global.hostname );
     g_signal_connect( e_Username, "changed", G_CALLBACK( entry_edited ), &global.username );
     g_signal_connect( e_Password, "changed", G_CALLBACK( entry_edited ), &global.password );
+    g_signal_connect( check_Save_pass, "toggled", G_CALLBACK( check_button_activate ), &global.save_pass );
 
     /* Actions */
-    gtk_widget_show_all( GTK_WIDGET( main_window ) );
     gtk_widget_grab_focus( e_Username );
+    gtk_toggle_button_set_active( check_Save_pass, global.save_pass );
+    gtk_widget_show_all( GTK_WIDGET( main_window ) );
 }
 
 /*****************************************************************************
@@ -46,6 +49,7 @@ void page_connection_bind( GtkBuilder* builder )
 G_MODULE_EXPORT void on_create( GtkWindow* window, GtkButton* b_Connect )
 {
     global.save_login_data = FALSE;
+    global.save_pass = FALSE;
     global.auto_connect = FALSE;
     global.is_connected = FALSE;
     global.hostname = EMPTY_STRING;
@@ -58,6 +62,7 @@ G_MODULE_EXPORT void on_create( GtkWindow* window, GtkButton* b_Connect )
         global.x_display = g_key_file_get_string( config_keyfile, GROUP_PREFS, X_DISPLAY_CFG, &global.error_msg );
         global.send_delay = g_key_file_get_integer( config_keyfile, GROUP_PREFS, SEND_DELAY_CFG, &global.error_msg );
         global.save_login_data = g_key_file_get_boolean( config_keyfile, GROUP_PREFS, SAVE_LOGIN_CFG, &global.error_msg );
+        global.save_pass = g_key_file_get_boolean( config_keyfile, GROUP_PREFS, SAVE_PASS_CFG, &global.error_msg );
         global.auto_connect = g_key_file_get_boolean( config_keyfile, GROUP_PREFS, AUTO_CONNECT_CFG, &global.error_msg );
 
         global.hostname = g_key_file_get_string( config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, &global.error_msg );
@@ -90,15 +95,20 @@ G_MODULE_EXPORT void on_destroy( GtkWindow* window, GtkButton* b_Connect )
     g_key_file_set_string( config_keyfile, GROUP_PREFS, X_DISPLAY_CFG, global.x_display );
     g_key_file_set_integer( config_keyfile, GROUP_PREFS, SEND_DELAY_CFG, global.send_delay );
     g_key_file_set_boolean( config_keyfile, GROUP_PREFS, SAVE_LOGIN_CFG, global.save_login_data );
+    g_key_file_set_boolean( config_keyfile, GROUP_PREFS, SAVE_PASS_CFG, global.save_pass );
     g_key_file_set_boolean( config_keyfile, GROUP_PREFS, AUTO_CONNECT_CFG, global.auto_connect );
 
     if( global.save_login_data ) {
         g_key_file_set_string( config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, global.hostname );
         g_key_file_set_string( config_keyfile, GROUP_LOGIN, USERNAME_CFG, global.username );
-        g_key_file_set_string( config_keyfile, GROUP_LOGIN, PASSWORD_CFG, global.password );
     } else {
         g_key_file_set_string( config_keyfile, GROUP_LOGIN, HOSTNAME_CFG, "" );
         g_key_file_set_string( config_keyfile, GROUP_LOGIN, USERNAME_CFG, "" );
+    }
+
+    if( global.save_pass ) {
+        g_key_file_set_string( config_keyfile, GROUP_LOGIN, PASSWORD_CFG, global.password );
+    } else {
         g_key_file_set_string( config_keyfile, GROUP_LOGIN, PASSWORD_CFG, "" );
     }
 
