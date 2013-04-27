@@ -591,6 +591,7 @@
                         <property name="buffer">buffer_Key_sequence</property>
                         <property name="max_length">1000</property>
                         <property name="invisible_char">•</property>
+                        <signal name="activate" handler="key_sequence" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">True</property>
