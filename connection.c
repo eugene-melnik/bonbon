@@ -9,15 +9,14 @@
 
 extern global_t global;
 
-/*****************************************************************************
- *  Creating session and authenticate user.                                   *
-  *****************************************************************************/
+/*************************************************************************************************
+ *  Creating session and authenticate user.                                                       *
+  *************************************************************************************************/
 
 int open_connection( char* hostname, char* username, char* password )
 {
     /* Creating session */
-    global.session = ssh_new();
-    if( global.session == NULL ) {
+    if( ( global.session = ssh_new() ) == NULL ) {
         g_warning( STR_ERROR_CREATING_SESSION );
         return( CONNECTION_SESSION_CREATE_ERROR );
     }
@@ -25,22 +24,15 @@ int open_connection( char* hostname, char* username, char* password )
     /* Set session properties and try to connect */
     ssh_options_set( global.session, SSH_OPTIONS_HOST, hostname );
     ssh_options_set( global.session, SSH_OPTIONS_USER, username );
+
     if( ssh_connect( global.session ) != SSH_OK ) {
         g_warning( STR_ERROR_CONNECTION );
         ssh_free( global.session );
         return( CONNECTION_SESSION_CONNECT_ERROR );
     }
 
-    /* Authenticate with keys */
-    if( !strcmp( password, EMPTY_STRING ) ) {
-        /* FIXME: Don't works. */
-        if( ssh_userauth_password( global.session, NULL, NULL ) != SSH_OK ) {
-            g_warning( STR_ERROR_AUTHENTICATE );
-            ssh_disconnect( global.session );
-            ssh_free( global.session );
-            return( CONNECTION_SESSION_AUTH_ERROR );
-        }
-    } else
+    /// TODO: Authenticate with keys
+
     /* Authenticate with password */
     if( ssh_userauth_password( global.session, NULL, password ) != SSH_OK ) {
         g_warning( STR_ERROR_AUTHENTICATE_PASS );
@@ -52,9 +44,9 @@ int open_connection( char* hostname, char* username, char* password )
     return( SUCCESS );
 }
 
-/*****************************************************************************
- *  Disconnecting from the remote host.                                       *
-  *****************************************************************************/
+/*************************************************************************************************
+ *  Disconnecting from the remote host.                                                           *
+  *************************************************************************************************/
 
 void close_connection()
 {
@@ -62,14 +54,15 @@ void close_connection()
     ssh_free( global.session );
 }
 
-/*****************************************************************************
- *  Opening channel and sending command to the remote host.                   *
-  *****************************************************************************/
+/*************************************************************************************************
+ *  Opening channel and sending command to the remote host.                                       *
+  *************************************************************************************************/
 
 int execute_command( const char* command, char** result )
 {
     /* Creating channel and opening session */
     ssh_channel channel = ssh_channel_new( global.session );
+
     if( channel == NULL ) {
         g_warning( "Opening channel error..." );
         ssh_disconnect( global.session );
@@ -92,8 +85,8 @@ int execute_command( const char* command, char** result )
     }
 
     /* Reading results */
-    char* buffer = (char*) malloc( 2048 );
-    ssh_channel_read( channel, buffer, 2048, 0 );
+    char* buffer = (char*) malloc( RESULT_BUFFER_SIZE );
+    ssh_channel_read( channel, buffer, RESULT_BUFFER_SIZE, 0 );
     if( result != NULL ) *result = buffer;
 
     /* Closing channel */
@@ -103,13 +96,13 @@ int execute_command( const char* command, char** result )
     return( SUCCESS );
 }
 
-/*****************************************************************************
- *  Formatting command and sending it to the remote host.                     *
-  *****************************************************************************/
+/*************************************************************************************************
+ *  Formatting command and sending it to the remote host.                                         *
+  *************************************************************************************************/
 
 int send_key( const char* key )
 {
-    char command[ 128 ];
+    char command[ COMMAND_BUFFER_SIZE ];
     sprintf( command, "DISPLAY=%s xdotool key %s", global.x_display, key );
     return( execute_command( command, NULL ) );
 }

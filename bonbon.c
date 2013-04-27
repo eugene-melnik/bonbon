@@ -10,11 +10,11 @@
 
 #include <gtk/gtk.h>
 
-/*****************************************************************************
- *  Entry point.                                                              *
- ******************************************************************************
- *  Initializing, loading interface from file and connecting signals.         *
-  *****************************************************************************/
+/*************************************************************************************************
+ * Entry point.                                                                                   *
+ **************************************************************************************************
+ *  Initializing, loading interface from file and connecting signals.                             *
+  *************************************************************************************************/
 
 int main( int argc, char** argv )
 {
@@ -23,10 +23,11 @@ int main( int argc, char** argv )
     gtk_init( &argc, &argv );
 
     /* Loading widows forms from XML (Glade) file */
-    GtkBuilder * builder = gtk_builder_new();
+    GtkBuilder* builder = gtk_builder_new();
 
     if( !gtk_builder_add_from_file( builder, GLADE_FILE_NAME, &global.error_msg ) ) {
         g_warning( "%s\n", global.error_msg->message );
+        global.error_msg = NULL;
         return( BUILDER_LOAD_FAIL );
     }
 
@@ -34,15 +35,15 @@ int main( int argc, char** argv )
     page_connection_bind( builder );
     page_keyboard_bind( builder );
     page_shell_bind( builder );
-    preferences_window_bind( builder );
     grab_window_bind( builder );
+    preferences_window_bind( builder );
 
     /* Signals */
     gtk_builder_connect_signals( builder, NULL );
 
     /* Starting */
-    g_object_unref( G_OBJECT( builder ) );
     show_in_statusbar( READY_MESSAGE );
+    g_object_unref( builder );
     gtk_main();
 
     return( SUCCESS );

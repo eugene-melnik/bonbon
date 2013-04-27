@@ -15,7 +15,7 @@
 
 /* Handlers */
 void page_shell_bind( GtkBuilder* builder );
-G_MODULE_EXPORT void b_Execute_clicked( GtkWidget* widget, gpointer data );
+void b_Execute_clicked( GtkWidget* widget, gpointer data );
 
 #endif // PAGE_SHELL_H_INCLUDED
 

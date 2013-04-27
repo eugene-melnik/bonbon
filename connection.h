@@ -7,7 +7,6 @@
 /* Handlers */
 int open_connection( char* hostname, char* username, char* password );
 void close_connection();
-
 int execute_command( const char* command, char** result );
 int send_key( const char* key );
 

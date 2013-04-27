@@ -14,74 +14,96 @@ char* key2 = NULL;
 char* key3 = NULL;
 char* key_seq = NULL;
 
-GtkWidget* entry_Key_sequence;
+static GtkComboBoxText* combo_Key1 = NULL;
+static GtkComboBoxText* combo_Key2 = NULL;
+static GtkEntry* e_Key3 = NULL;
+static GtkEntry* e_Key_sequence = NULL;
+
+/*************************************************************************************************
+ * Retrieving widgets and connections signals.                                                    *
+  *************************************************************************************************/
 
 void page_keyboard_bind( GtkBuilder* builder )
 {
     /* Objects */
-    GtkWidget* combo_Key1 = GTK_WIDGET( gtk_builder_get_object( builder, COMBO_KEY1 ) );
-    GtkWidget* combo_Key2 = GTK_WIDGET( gtk_builder_get_object( builder, COMBO_KEY2 ) );
-    GtkWidget* entry_Key3 = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_KEY3 ) );
-    entry_Key_sequence = GTK_WIDGET( gtk_builder_get_object( builder, ENTRY_KEY_SEQ ) );
+    combo_Key1 = GTK_COMBO_BOX_TEXT( gtk_builder_get_object( builder, COMBO_KEY1 ) );
+    combo_Key2 = GTK_COMBO_BOX_TEXT( gtk_builder_get_object( builder, COMBO_KEY2 ) );
+    e_Key3 = GTK_ENTRY( gtk_builder_get_object( builder, ENTRY_KEY3 ) );
+    e_Key_sequence = GTK_ENTRY( gtk_builder_get_object( builder, ENTRY_KEY_SEQ ) );
 
     /* Signals */
     g_signal_connect( combo_Key1, "changed", G_CALLBACK( combo_changed ), &key1 );
     g_signal_connect( combo_Key2, "changed", G_CALLBACK( combo_changed ), &key2 );
-    g_signal_connect( entry_Key3, "changed", G_CALLBACK( entry_edited ), &key3 );
-    g_signal_connect( entry_Key_sequence, "changed", G_CALLBACK( entry_edited ), &key_seq);
+    g_signal_connect( e_Key3, "changed", G_CALLBACK( entry_edited ), &key3 );
+    g_signal_connect( e_Key_sequence, "changed", G_CALLBACK( entry_edited ), &key_seq);
 }
 
-G_MODULE_EXPORT void multiply_keys( GtkButton* button, gpointer data )
+/*************************************************************************************************
+ * Multiply keys handler.                                                                         *
+  *************************************************************************************************/
+
+void multiply_keys( GtkButton* button, gpointer data )
 {
-    if( global.is_connected ) {
-        char keys[100] = EMPTY_STRING;
-
-        if( key1 != NULL ) { sprintf( keys, "%s+", key1 ); }
-        if( key2 != NULL ) { strcat( keys, key2 ); strcat( keys, "+" ); }
-        if( key3 != NULL ) { strcat( keys, key3 ); }
-        else if( strlen( keys ) != 0 ) {
-            keys[ strlen( keys ) - 1 ] = END_OF_STRING;
-        }
-
-        show_in_statusbar( keys );
-        send_key( keys );
-    } else {
+    if( !global.is_connected ) {
         show_in_statusbar( OFFLINE_MESSAGE );
+        return;
     }
+
+    char keys[ COMMAND_BUFFER_SIZE ] = EMPTY_STRING;
+
+    if( key1 != NULL ) { sprintf( keys, "%s+", key1 ); }
+    if( key2 != NULL ) { strcat( keys, key2 ); strcat( keys, "+" ); }
+    if( key3 != NULL ) { strcat( keys, key3 ); }
+    else if( strlen( keys ) != 0 ) {
+        keys[ strlen( keys ) - 1 ] = END_OF_STRING;
+    }
+
+    show_in_statusbar( keys );
+    send_key( keys );
 }
 
-G_MODULE_EXPORT void key_sequence( GtkButton* button, gpointer data )
+/*************************************************************************************************
+ * Keys sequence handler.                                                                         *
+  *************************************************************************************************/
+
+void key_sequence( GtkButton* button, gpointer data )
 {
-    if( global.is_connected ) {
-        if( key_seq != NULL ) {
-            char* key_name = strtok( key_seq, " " );
-
-            while( key_name != NULL ) {
-                send_key( key_name );
-                key_name = strtok( NULL, " " );
-                usleep( global.send_delay );
-            }
-
-            GtkEntryBuffer* buffer = gtk_entry_get_buffer( GTK_ENTRY( entry_Key_sequence ) );
-            gtk_entry_buffer_delete_text( buffer, 0, gtk_entry_buffer_get_length( buffer ) );
-            show_in_statusbar( DONE_MESSAGE );
-            key_seq = NULL;
-        } else {
-            show_in_statusbar( "Enter sequence first!" );
-        }
-    } else {
+    if( !global.is_connected ) {
         show_in_statusbar( OFFLINE_MESSAGE );
+        return;
     }
+    if( key_seq == NULL ) {
+        show_in_statusbar( ENTER_SEQ_MESSAGE );
+        return;
+    }
+
+    char* key_name = strtok( key_seq, " " );
+
+    while( key_name != NULL ) {
+        send_key( key_name );
+        key_name = strtok( NULL, " " );
+        usleep( global.send_delay );
+    }
+
+    GtkEntryBuffer* buffer = gtk_entry_get_buffer( GTK_ENTRY( e_Key_sequence ) );
+    gtk_entry_buffer_delete_text( buffer, 0, -1 );
+    show_in_statusbar( DONE_MESSAGE );
+    key_seq = NULL;
 }
 
-G_MODULE_EXPORT void key_pressed( GtkButton* button, gpointer data )
+/*************************************************************************************************
+ * Standart keys handler.                                                                         *
+  *************************************************************************************************/
+
+void key_pressed( GtkButton* button, gpointer data )
 {
-    if( global.is_connected ) {
-        const char* type = gtk_button_get_label( button );
-        show_in_statusbar( type );
-        send_key( type );
-    } else {
+    if( !global.is_connected ) {
         show_in_statusbar( OFFLINE_MESSAGE );
+        return;
     }
+
+    const char* type = gtk_button_get_label( button );
+    show_in_statusbar( type );
+    send_key( type );
 }
 

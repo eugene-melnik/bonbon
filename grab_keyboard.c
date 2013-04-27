@@ -8,7 +8,11 @@
 
 extern global_t global;
 
-GtkLabel* label_grab;
+static GtkLabel* label_grab;
+
+/*************************************************************************************************
+ * Retrieving widgets and connections signals.                                                    *
+  *************************************************************************************************/
 
 void grab_window_bind( GtkBuilder* builder )
 {
@@ -16,23 +20,22 @@ void grab_window_bind( GtkBuilder* builder )
     label_grab = GTK_LABEL( gtk_builder_get_object( builder, GRAB_LABEL_NAME ) );
 }
 
-G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
+/*************************************************************************************************
+ * Keyboard handler.                                                                              *
+  *************************************************************************************************/
+
+gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
 {
     if( !global.is_connected ) {
         gtk_label_set_text( label_grab, OFFLINE_MESSAGE );
-        show_in_statusbar( OFFLINE_MESSAGE );
         return( TRUE );
     }
 
-    char command[ 30 ] = "";
+    char command[ COMMAND_BUFFER_SIZE ] = EMPTY_STRING;
 
     /* Modificators */
-    if( event->state & GDK_SHIFT_MASK ) {
-        strcat( command, "shift+" );
-    }
-    if( event->state & GDK_CONTROL_MASK ) {
-        strcat( command, "ctrl+" );
-    }
+    if( event->state & GDK_SHIFT_MASK ) strcat( command, "shift+" );
+    if( event->state & GDK_CONTROL_MASK ) strcat( command, "ctrl+" );
 
     /* Main buttons */
     buttons b[] = { { GDK_KEY_Return,    "Return"    }, { GDK_KEY_Home,      "Home"      },
@@ -46,6 +49,7 @@ G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, Gtk
                     { GDK_KEY_Alt_L,     "alt"       }, { GDK_KEY_Super_L,   "super"     } };
 
     const int b_count = sizeof(b) / sizeof(buttons);
+
     for( int i = 0; i < b_count; i++ ) {
         if( event->keyval == b[i].key_code ) {
             strcat( command, b[i].key_name );
@@ -53,7 +57,7 @@ G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, Gtk
         }
     }
 
-    /* Chars and digits */
+    /* Chars, digits and functional keys */
     for( int i = GDK_KEY_a; i <= GDK_KEY_z; i++ ) {
         if( ( event->keyval == i ) || ( event->keyval == (i - 0x20) ) ) {
             sprintf( command, "%s%c", command, (char) i );
@@ -75,12 +79,8 @@ G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, Gtk
 
     /* Send keys */
     if( strlen( command ) != 0 ) {
-        if( command[ strlen(command) - 1] == '+' ) {
-            command[ strlen(command) - 1] = END_OF_STRING;
-        }
-
+        if( command[ strlen(command) - 1] == '+' ) pop_char( command );
         gtk_label_set_text( label_grab, command );
-        show_in_statusbar( command );
         send_key( command );
     }
 

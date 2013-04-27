@@ -5,6 +5,7 @@
 #define DONE_MESSAGE                    "Done!"
 #define OFFLINE_MESSAGE                 "You are offline!"
 #define SOME_ERROR_MESSAGE              "Oops! There is some error here! :)"
+#define ENTER_SEQ_MESSAGE               "Enter sequence first!"
 
 /* Strings */
 #define EMPTY_STRING                    ""
@@ -12,7 +13,7 @@
 #define END_OF_LINE                     "\n"
 #define END_OF_STRING                   '\0'
 
-/* */
+/* Conection errors */
 #define STR_ERROR_CREATING_SESSION      "Error while creating session..."
 #define STR_ERROR_CONNECTION            "Error while connecting..."
 #define STR_ERROR_AUTHENTICATE          "Authentication error (without password)..."

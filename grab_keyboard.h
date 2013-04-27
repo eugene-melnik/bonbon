@@ -8,6 +8,7 @@
 #define GRAB_WINDOW_NAME        "grab_window"
 #define GRAB_LABEL_NAME         "label_grab"
 
+/* User's types */
 typedef struct {
     int  key_code;
     char key_name[16];
@@ -15,7 +16,7 @@ typedef struct {
 
 /* Handlers */
 void grab_window_bind( GtkBuilder* builder );
-G_MODULE_EXPORT gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label );
+gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label );
 
 #endif // GRAB_KEYBOARD_H_INCLUDED
 

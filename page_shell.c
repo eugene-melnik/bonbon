@@ -8,10 +8,14 @@
 
 extern global_t global;
 
+static GtkEntry* e_Shell = NULL;
+static GtkTextView* text_Shell = NULL;
+static GtkTextBuffer* text_buffer_Shell = NULL;
 char* command = NULL;
-GtkEntry* e_Shell = NULL;
-GtkTextView* text_Shell = NULL;
-GtkTextBuffer* text_buffer_Shell = NULL;
+
+/*************************************************************************************************
+ * Retrieving widgets and connections signals.                                                    *
+  *************************************************************************************************/
 
 void page_shell_bind( GtkBuilder* builder )
 {
@@ -24,37 +28,35 @@ void page_shell_bind( GtkBuilder* builder )
     g_signal_connect( e_Shell, "changed", G_CALLBACK( entry_edited ), &command );
 }
 
-G_MODULE_EXPORT void b_Execute_clicked( GtkWidget* widget, gpointer data )
+/*************************************************************************************************
+ * Execute command on the remote computer.                                                        *
+  *************************************************************************************************/
+
+void b_Execute_clicked( GtkWidget* widget, gpointer data )
 {
-    if( global.is_connected ) {
-        GtkTextIter iter;
-        gtk_text_buffer_get_end_iter( text_buffer_Shell, &iter );
-
-        if ( strcmp( command, EMPTY_STRING ) ) {
-            if ( global.is_connected ) {
-                gtk_text_buffer_insert( text_buffer_Shell, &iter, command, -1 );
-                gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
-                show_in_statusbar( DONE_MESSAGE );
-
-                char* result;
-                execute_command( command, &result );
-                /** FIXME: There is a little bug here */
-                gtk_text_buffer_insert( text_buffer_Shell, &iter, result, -1 );
-                free( result );
-            } else {
-                gtk_text_buffer_insert( text_buffer_Shell, &iter, OFFLINE_MESSAGE, -1 );
-                gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
-                show_in_statusbar( OFFLINE_MESSAGE );
-            }
-
-            gtk_entry_set_text( GTK_ENTRY( e_Shell ), EMPTY_STRING );
-        } else {
-            show_in_statusbar( ENTER_COMMAND_MESSAGE );
-        }
-
-        gtk_text_view_scroll_to_iter( GTK_TEXT_VIEW( text_Shell ), &iter, 0.0, FALSE, 0.0, 0.0 );
-    } else {
+    /// FIXME: Works, but not so good
+    if( !global.is_connected ) {
         show_in_statusbar( OFFLINE_MESSAGE );
+        return;
     }
+
+    GtkTextIter iter;
+    gtk_text_buffer_get_end_iter( text_buffer_Shell, &iter );
+
+    if ( strcmp( command, EMPTY_STRING ) != 0 ) {
+        gtk_text_buffer_insert( text_buffer_Shell, &iter, command, -1 );
+        gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
+        show_in_statusbar( DONE_MESSAGE );
+
+        char* result;
+        execute_command( command, &result );
+        gtk_text_buffer_insert( text_buffer_Shell, &iter, result, -1 );
+        gtk_entry_buffer_delete_text( gtk_entry_get_buffer( e_Shell ), 0, -1 );
+        free( result );
+    } else {
+        show_in_statusbar( ENTER_COMMAND_MESSAGE );
+    }
+
+    gtk_text_view_scroll_to_iter( text_Shell, &iter, 0.0, FALSE, 0.0, 0.0 );
 }
 

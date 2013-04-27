@@ -5,23 +5,23 @@
 #include <libssh/libssh.h>
 #include <gtk/gtk.h>
 
-/* Files */
-#define CONFIG_FILE_NAME                "data/bonbon.conf"
-
 /* Global constants */
-#define COMMAND_BUFFER_SIZE             1024 * sizeof(char)  // 1KiB
+#define COMMAND_BUFFER_SIZE             1024 * sizeof(char)
+#define RESULT_BUFFER_SIZE              4096 * sizeof(char)
 
-/* Global variables */
+/* Global variable */
 typedef struct {
     char*         hostname;         /* host name or computer's IP */
     char*         username;         /* user's name on remote computer */
     char*         password;         /* user's password */
+
     char*         x_display;
     int           send_delay;
     int           auto_connect;
     int           is_connected;
     int           save_login_data;
     int           save_pass;
+
     GError*       error_msg;
     GtkStatusbar* statusbar;
     ssh_session   session;
@@ -36,6 +36,7 @@ void entry_edited_dig( GtkEntry* entry, int* destination );
 void combo_changed( GtkComboBoxText* combobox, char** destination );
 void check_button_activate( GtkCheckButton* button, int* destination );
 void remove_children( GtkContainer* container );
+void pop_char( char* string );
 
 #endif // FUNCS_H_INCLUDED
 
