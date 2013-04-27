@@ -43,20 +43,20 @@ void b_Execute_clicked( GtkWidget* widget, gpointer data )
     GtkTextIter iter;
     gtk_text_buffer_get_end_iter( text_buffer_Shell, &iter );
 
-    if ( strcmp( command, EMPTY_STRING ) != 0 ) {
-        gtk_text_buffer_insert( text_buffer_Shell, &iter, command, -1 );
-        gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
-        show_in_statusbar( DONE_MESSAGE );
-
-        char* result;
-        execute_command( command, &result );
-        gtk_text_buffer_insert( text_buffer_Shell, &iter, result, -1 );
-        gtk_entry_buffer_delete_text( gtk_entry_get_buffer( e_Shell ), 0, -1 );
-        free( result );
-    } else {
+    if ( strcmp( command, EMPTY_STRING ) == 0 ) {
         show_in_statusbar( ENTER_COMMAND_MESSAGE );
+        return;
     }
 
+    show_in_statusbar_ext( "Executing command: \"%s\"...", command );
+    gtk_text_buffer_insert( text_buffer_Shell, &iter, command, -1 );
+    gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
+
+    char* result;
+    execute_command( command, &result );
+    gtk_text_buffer_insert( text_buffer_Shell, &iter, result, -1 );
+    free( result );
     gtk_text_view_scroll_to_iter( text_Shell, &iter, 0.0, FALSE, 0.0, 0.0 );
+    gtk_entry_buffer_delete_text( gtk_entry_get_buffer( e_Shell ), 0, -1 );
 }
 

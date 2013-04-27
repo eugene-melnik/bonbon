@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 extern global_t global;
 
@@ -16,7 +17,16 @@ void show_in_statusbar( const char* message )
     gtk_statusbar_push( global.statusbar, 0, message );
 }
 
-/// TODO: Make new overloaded function with extended functional
+/*************************************************************************************************
+ *  Show text in statusbar. Extended version.                                                     *
+  *************************************************************************************************/
+
+void show_in_statusbar_ext( const char* format, const char* value )
+{
+    char message[ COMMAND_BUFFER_SIZE ];
+    snprintf( message, COMMAND_BUFFER_SIZE, format, value );
+    show_in_statusbar( message );
+}
 
 /*************************************************************************************************
  *  Entry handler (for text).                                                                     *

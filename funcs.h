@@ -31,6 +31,7 @@ global_t global;
 
 /* Global functions */
 void show_in_statusbar( const char* message );
+void show_in_statusbar_ext( const char* format, const char* value );
 void entry_edited( GtkEntry* entry, char** destination );
 void entry_edited_dig( GtkEntry* entry, int* destination );
 void combo_changed( GtkComboBoxText* combobox, char** destination );

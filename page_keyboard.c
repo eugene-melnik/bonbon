@@ -58,7 +58,7 @@ void multiply_keys( GtkButton* button, gpointer data )
         keys[ strlen( keys ) - 1 ] = END_OF_STRING;
     }
 
-    show_in_statusbar( keys );
+    show_in_statusbar_ext( "Sending keys: \"%s\".", keys );
     send_key( keys );
 }
 
@@ -77,6 +77,7 @@ void key_sequence( GtkButton* button, gpointer data )
         return;
     }
 
+    show_in_statusbar_ext( "Sending sequence: \"%s\".", key_seq );
     char* key_name = strtok( key_seq, " " );
 
     while( key_name != NULL ) {
@@ -87,7 +88,6 @@ void key_sequence( GtkButton* button, gpointer data )
 
     GtkEntryBuffer* buffer = gtk_entry_get_buffer( GTK_ENTRY( e_Key_sequence ) );
     gtk_entry_buffer_delete_text( buffer, 0, -1 );
-    show_in_statusbar( DONE_MESSAGE );
     key_seq = NULL;
 }
 
@@ -103,7 +103,7 @@ void key_pressed( GtkButton* button, gpointer data )
     }
 
     const char* type = gtk_button_get_label( button );
-    show_in_statusbar( type );
+    show_in_statusbar_ext( "Sending key: \"%s\".", type );
     send_key( type );
 }
 
