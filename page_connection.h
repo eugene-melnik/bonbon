@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 
 /* Files */
-#define CONFIG_FILE_NAME                "data/bonbon.conf"
+#define CONFIG_FILE_NAME        "data/bonbon.conf"
 
 /* Objects (in XML) */
 #define MAIN_WINDOW_NAME        "main_window"
@@ -15,7 +15,7 @@
 #define ENTRY_HOSTNAME_NAME     "e_Hostname"
 #define ENTRY_USERNAME_NAME     "e_Username"
 #define ENTRY_PASSWORD_NAME     "e_Password"
-#define CHECK_SAVE_PASS         "check_Save_pass"
+#define CHECK_SAVE_PASS         "check_Save_password"
 
 #define STOCK_BUTTON_CONNECT    "gtk-connect"
 #define STOCK_BUTTON_DISCONNECT "gtk-disconnect"
