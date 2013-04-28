@@ -49,14 +49,12 @@ void multiply_keys( GtkButton* button, gpointer data )
         return;
     }
 
-    char keys[ COMMAND_BUFFER_SIZE ] = EMPTY_STRING;
+    char keys[ COMMAND_BUFFER_SIZE ] = "";
 
     if( key1 != NULL ) { sprintf( keys, "%s+", key1 ); }
     if( key2 != NULL ) { strcat( keys, key2 ); strcat( keys, "+" ); }
     if( key3 != NULL ) { strcat( keys, key3 ); }
-    else if( strlen( keys ) != 0 ) {
-        keys[ strlen( keys ) - 1 ] = END_OF_STRING;
-    }
+    else if( strlen( keys ) != 0 ) pop_char( keys );
 
     show_in_statusbar_ext( "Sending keys: \"%s\".", keys );
     send_key( keys );
@@ -73,7 +71,7 @@ void key_sequence( GtkButton* button, gpointer data )
         return;
     }
     if( key_seq == NULL ) {
-        show_in_statusbar( ENTER_SEQ_MESSAGE );
+        show_in_statusbar( ENTER_DATA_MESSAGE );
         return;
     }
 

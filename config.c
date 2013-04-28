@@ -15,9 +15,9 @@ extern global_t global;
 int load_config( const char* filename )
 {
     /// TODO: Optimize this shit!
-    global.hostname = EMPTY_STRING;
-    global.username = EMPTY_STRING;
-    global.password = EMPTY_STRING;
+    global.hostname = "";
+    global.username = "";
+    global.password = "";
     global.save_pass = FALSE;
     global.save_login_data = FALSE;
     global.auto_connect = FALSE;
@@ -63,14 +63,14 @@ int save_config( const char* filename )
         g_key_file_set_string( keyfile, GROUP_LOGIN, HOSTNAME_CFG, global.hostname );
         g_key_file_set_string( keyfile, GROUP_LOGIN, USERNAME_CFG, global.username );
     } else {
-        g_key_file_set_string( keyfile, GROUP_LOGIN, HOSTNAME_CFG, EMPTY_STRING );
-        g_key_file_set_string( keyfile, GROUP_LOGIN, USERNAME_CFG, EMPTY_STRING );
+        g_key_file_set_string( keyfile, GROUP_LOGIN, HOSTNAME_CFG, "" );
+        g_key_file_set_string( keyfile, GROUP_LOGIN, USERNAME_CFG, "" );
     }
 
     if( global.save_pass ) {
         g_key_file_set_string( keyfile, GROUP_LOGIN, PASSWORD_CFG, global.password );
     } else {
-        g_key_file_set_string( keyfile, GROUP_LOGIN, PASSWORD_CFG, EMPTY_STRING );
+        g_key_file_set_string( keyfile, GROUP_LOGIN, PASSWORD_CFG, "" );
     }
 
     char* config = g_key_file_to_data( keyfile, NULL, &global.error_msg );

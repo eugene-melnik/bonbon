@@ -43,14 +43,14 @@ void b_Execute_clicked( GtkWidget* widget, gpointer data )
     GtkTextIter iter;
     gtk_text_buffer_get_end_iter( text_buffer_Shell, &iter );
 
-    if ( strcmp( command, EMPTY_STRING ) == 0 ) {
-        show_in_statusbar( ENTER_COMMAND_MESSAGE );
+    if ( isempty( command ) ) {
+        show_in_statusbar( ENTER_DATA_MESSAGE );
         return;
     }
 
-    show_in_statusbar_ext( "Executing command: \"%s\"...", command );
+    show_in_statusbar_ext( "Executing command: \"%s\".", command );
     gtk_text_buffer_insert( text_buffer_Shell, &iter, command, -1 );
-    gtk_text_buffer_insert( text_buffer_Shell, &iter, END_OF_LINE, -1 );
+    gtk_text_buffer_insert( text_buffer_Shell, &iter, "\n", -1 );
 
     char* result;
     execute_command( command, &result );

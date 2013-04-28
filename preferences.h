@@ -5,10 +5,10 @@
 #include <gtk/gtk.h>
 
 /* Objects (in XML) */
-#define CHECK_SAVE_DATA                 "check_Save_login_data"
-#define CHECK_AUTO_LOGIN                "check_Auto_login"
-#define ENTRY_DELAY                     "entry_Delay"
-#define ENTRY_X                         "entry_X"
+#define CHECK_SAVE_DATA                         "check_Save_login_data"
+#define CHECK_AUTO_LOGIN                        "check_Auto_login"
+#define ENTRY_DELAY                             "entry_Delay"
+#define ENTRY_X                                 "entry_X"
 
 /* Handlers */
 void preferences_window_bind( GtkBuilder* builder );

@@ -5,8 +5,8 @@
 #include <gtk/gtk.h>
 
 /* Objects (in XML) */
-#define GRAB_WINDOW_NAME        "grab_window"
-#define GRAB_LABEL_NAME         "label_grab"
+#define GRAB_WINDOW_NAME                        "grab_window"
+#define GRAB_LABEL_NAME                         "label_grab"
 
 /* User's types */
 typedef struct {

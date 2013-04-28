@@ -103,7 +103,7 @@ gpointer connect_thread( gpointer button )
 {
     GtkWidget* label = NULL;
 
-    if( !strcmp( global.hostname, EMPTY_STRING ) || !strcmp( global.username, EMPTY_STRING ) ) {
+    if( isempty( global.hostname ) || isempty( global.username ) ) {
         gdk_threads_enter();
         show_in_statusbar( INCORRECT_DATA_MESSAGE );
         label = gtk_label_new( STATUS_EMPTY_FIELDS );
@@ -122,7 +122,7 @@ gpointer connect_thread( gpointer button )
 
             show_in_statusbar( CONNECTED_MESSAGE );
             label = gtk_label_new( STATUS_CONNECTED );
-            gtk_button_set_label( GTK_BUTTON( button ), STOCK_BUTTON_DISCONNECT );
+            gtk_button_set_label( GTK_BUTTON( button ), "gtk-disconnect" );
         } else {
             gdk_threads_enter();
             label = gtk_label_new( STATUS_ERROR );
@@ -152,7 +152,7 @@ gpointer connect_thread( gpointer button )
 
         show_in_statusbar( DISCONNECTED_MESSAGE );
         label = gtk_label_new( STATUS_DISCONNECTED );
-        gtk_button_set_label( GTK_BUTTON( button ), STOCK_BUTTON_CONNECT );
+        gtk_button_set_label( GTK_BUTTON( button ), "gtk-connect" );
     }
 
     remove_children( GTK_CONTAINER( resultbox ) );

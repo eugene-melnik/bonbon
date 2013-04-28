@@ -31,7 +31,7 @@ gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
         return( TRUE );
     }
 
-    char command[ COMMAND_BUFFER_SIZE ] = EMPTY_STRING;
+    char command[ COMMAND_BUFFER_SIZE ] = "";
 
     /* Modificators */
     if( event->state & GDK_SHIFT_MASK ) strcat( command, "shift+" );

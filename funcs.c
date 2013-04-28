@@ -57,7 +57,7 @@ void combo_changed( GtkComboBoxText* combobox, char** destination )
 {
     if( *destination != NULL ) free( *destination );
     *destination = strdup( gtk_combo_box_text_get_active_text( combobox ) );
-    if( !strcmp( *destination, NOTHING_STRING ) ) *destination = NULL;
+    if( strcmp( *destination, "-" ) == 0 ) *destination = NULL;
 }
 
 /*************************************************************************************************
@@ -87,13 +87,26 @@ void remove_children( GtkContainer* container )
 }
 
 /*************************************************************************************************
+ *  Is chars array is empty.                                                                      *
+  *************************************************************************************************/
+
+int isempty( const char* string )
+{
+    if( string[0] == '\0' ) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+/*************************************************************************************************
  *  Remove last char from the string.                                                             *
   *************************************************************************************************/
 
 void pop_char( char* string )
 {
     if( strlen(string) != 0 ) {
-        string[ strlen(string) - 1 ] = END_OF_STRING;
+        string[ strlen(string) - 1 ] = '\0';
     }
 }
 
