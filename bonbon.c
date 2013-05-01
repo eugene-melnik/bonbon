@@ -24,8 +24,11 @@ int main( int argc, char** argv )
         if( ( strcmp( argv[1], "-v" ) == 0 ) ||
             ( strcmp( argv[1], "--version" ) == 0 ) ) {
             g_print( "Program: %s\nVersion: %s\n", PROGRAM_NAME, PROGRAM_VERSION );
-            return( SUCCESS );
+        } else {
+            g_print( "Error! Unknown argument: \"%s\"\n", argv[1] );
         }
+
+        return( SUCCESS );
     }
 
     /* GTK initialization */
