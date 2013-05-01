@@ -2,13 +2,14 @@
 #include "page_keyboard.h"
 #include "grab_keyboard.h"
 #include "preferences.h"
+#include "aboutdialog.h"
 #include "page_shell.h"
 #include "connection.h"
 #include "errors.h"
 #include "funcs.h"
 #include "bonbon.h"
 
-#include <gtk/gtk.h>
+global_t global;
 
 /*************************************************************************************************
  * Entry point.                                                                                   *
@@ -18,6 +19,15 @@
 
 int main( int argc, char** argv )
 {
+    /* Write version information */
+    if( argc == 2 ) {
+        if( ( strcmp( argv[1], "-v" ) == 0 ) ||
+            ( strcmp( argv[1], "--version" ) == 0 ) ) {
+            g_print( "Program: %s\nVersion: %s\n", PROGRAM_NAME, PROGRAM_VERSION );
+            return( SUCCESS );
+        }
+    }
+
     /* GTK initialization */
     gdk_threads_init();
     gtk_init( &argc, &argv );
@@ -37,6 +47,7 @@ int main( int argc, char** argv )
     page_shell_bind( builder );
     grab_window_bind( builder );
     preferences_window_bind( builder );
+    aboutdialog_bind( builder );
 
     /* Signals */
     gtk_builder_connect_signals( builder, NULL );

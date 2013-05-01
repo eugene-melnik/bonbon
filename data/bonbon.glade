@@ -10,8 +10,6 @@
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">main_window</property>
-    <property name="program_name">Bonbon</property>
-    <property name="version">0.9.2</property>
     <property name="comments">Remote control through ssh.</property>
     <property name="website">https://github.com/jeka-js/bonbon</property>
     <property name="website_label">Sources on github</property>
@@ -20,6 +18,7 @@
     <property name="translator_credits">Eugene Melnik</property>
     <property name="artists">Eugene Melnik</property>
     <property name="license_type">gpl-3-0</property>
+    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
     <signal name="response" handler="gtk_widget_hide" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="aboutdialog-vbox1">
@@ -44,11 +43,11 @@
       </object>
     </child>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Password">
-    <property name="max_length">40</property>
+  <object class="GtkEntryBuffer" id="buffer_Key3">
+    <property name="max_length">1000</property>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Username">
-    <property name="max_length">40</property>
+  <object class="GtkEntryBuffer" id="buffer_Key_sequence">
+    <property name="max_length">10</property>
   </object>
   <object class="GtkEntryBuffer" id="buffer_Delay">
     <property name="max_length">10</property>
@@ -57,11 +56,11 @@
   <object class="GtkEntryBuffer" id="buffer_Hostname">
     <property name="max_length">40</property>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Key3">
-    <property name="max_length">1000</property>
+  <object class="GtkEntryBuffer" id="buffer_Password">
+    <property name="max_length">40</property>
   </object>
-  <object class="GtkEntryBuffer" id="buffer_Key_sequence">
-    <property name="max_length">10</property>
+  <object class="GtkEntryBuffer" id="buffer_Username">
+    <property name="max_length">40</property>
   </object>
   <object class="GtkEntryBuffer" id="buffer_X">
     <property name="max_length">10</property>
@@ -173,6 +172,7 @@
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <signal name="change-current-page" handler="on_page_select" swapped="no"/>
             <child>
               <object class="GtkBox" id="box_Connection">
                 <property name="visible">True</property>
@@ -1068,6 +1068,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label">Shell</property>
+                <signal name="button-press-event" handler="gtk_widget_grab_focus" object="e_Shell" swapped="yes"/>
               </object>
               <packing>
                 <property name="position">2</property>

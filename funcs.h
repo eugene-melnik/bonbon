@@ -27,8 +27,6 @@ typedef struct {
     ssh_session   session;
 } global_t;
 
-global_t global;
-
 /* Global functions */
 void show_in_statusbar( const char* message );
 void show_in_statusbar_ext( const char* format, const char* value );

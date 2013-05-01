@@ -60,3 +60,15 @@ void b_Execute_clicked( GtkWidget* widget, gpointer data )
     gtk_entry_buffer_delete_text( gtk_entry_get_buffer( e_Shell ), 0, -1 );
 }
 
+/*************************************************************************************************
+ * Actions on notebook tabs select.                                                               *
+  *************************************************************************************************/
+
+void on_page_select( GtkNotebook* notebook, gpointer data )
+{
+g_print("popal\n");
+    if( gtk_notebook_get_current_page( notebook ) == 3 ) {
+        gtk_widget_grab_focus( GTK_WIDGET( e_Shell ) );
+    }
+}
+

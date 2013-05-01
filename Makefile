@@ -7,10 +7,10 @@ LDFLAGS = -lssh
 LDFLAGS += $(shell pkg-config gtk+-3.0 gmodule-2.0 --libs)
 
 SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c page_shell.c \
-          preferences.c grab_keyboard.c config.c
+          preferences.c grab_keyboard.c config.c aboutdialog.c
 
 OBJS = bonbon.o funcs.o connection.o page_connection.o page_keyboard.o page_shell.o \
-       preferences.o grab_keyboard.o config.o
+       preferences.o grab_keyboard.o config.o aboutdialog.o
 
 EXECUTABLE_DBG = bonbon_dbg
 EXECUTABLE = bonbon
@@ -50,6 +50,9 @@ grab_keyboard.o: grab_keyboard.c grab_keyboard.h connection.h
 
 config.o: config.c config.h errors.h funcs.h strings.h
 	$(CC) $(CFLAGS) -c config.c
+
+aboutdialog.o: aboutdialog.c aboutdialog.h bonbon.h
+	$(CC) $(CFLAGS) -c aboutdialog.c
 
 clean:
 	$(RM) $(OBJS) $(EXECUTABLE) $(EXECUTABLE_DBG)

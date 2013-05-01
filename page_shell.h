@@ -13,6 +13,7 @@
 /* Handlers */
 void page_shell_bind( GtkBuilder* builder );
 void b_Execute_clicked( GtkWidget* widget, gpointer data );
+void on_page_select( GtkNotebook* notebook, gpointer data );
 
 #endif // PAGE_SHELL_H_INCLUDED
 

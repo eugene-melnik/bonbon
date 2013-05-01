@@ -24,7 +24,6 @@
 #define DISCONNECTED_MESSAGE                    "Disconnected."
 
 /* Status messages */
-
 #define STATUS_EMPTY_FIELDS                     "Empty fields!"
 #define STATUS_CONNECTED                        "Connected"
 #define STATUS_DISCONNECTED                     "Disconnected"
