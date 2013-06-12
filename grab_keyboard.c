@@ -10,23 +10,15 @@ extern global_t global;
 
 static GtkLabel* label_grab;
 
-/*************************************************************************************************
- * Retrieving widgets and connections signals.                                                    *
-  *************************************************************************************************/
-
 void grab_window_bind( GtkBuilder* builder )
 {
-    /* Objects */
     label_grab = GTK_LABEL( gtk_builder_get_object( builder, GRAB_LABEL_NAME ) );
 }
 
-/*************************************************************************************************
- * Keyboard handler.                                                                              *
-  *************************************************************************************************/
-
 gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
 {
-    if( !global.is_connected ) {
+    if( !global.is_connected )
+    {
         gtk_label_set_text( label_grab, OFFLINE_MESSAGE );
         return( TRUE );
     }
@@ -50,35 +42,44 @@ gboolean press_event( GtkWidget* widget, GdkEventKey* event, GtkLabel *label )
 
     const int b_count = sizeof(b) / sizeof(buttons);
 
-    for( int i = 0; i < b_count; i++ ) {
-        if( event->keyval == b[i].key_code ) {
+    for( int i = 0; i < b_count; i++ )
+    {
+        if( event->keyval == b[i].key_code )
+        {
             strcat( command, b[i].key_name );
             break;
         }
     }
 
     /* Chars, digits and functional keys */
-    for( int i = GDK_KEY_a; i <= GDK_KEY_z; i++ ) {
-        if( ( event->keyval == i ) || ( event->keyval == (i - 0x20) ) ) {
+    for( int i = GDK_KEY_a; i <= GDK_KEY_z; i++ )
+    {
+        if( ( event->keyval == i ) || ( event->keyval == (i - 0x20) ) )
+        {
             sprintf( command, "%s%c", command, (char) i );
             break;
         }
     }
-    for( int i = GDK_KEY_0; i <= GDK_KEY_9; i++ ) {
-        if( event->keyval == i ) {
+    for( int i = GDK_KEY_0; i <= GDK_KEY_9; i++ )
+    {
+        if( event->keyval == i )
+        {
             sprintf( command, "%s%c", command, (char) i );
             break;
         }
     }
-    for( int i = GDK_KEY_F1; i <= GDK_KEY_F12; i++ ) {
-        if( event->keyval == i ) {
+    for( int i = GDK_KEY_F1; i <= GDK_KEY_F12; i++ )
+    {
+        if( event->keyval == i )
+        {
             sprintf( command, "%sF%i", command, (i - GDK_KEY_F1 + 1) );
             break;
         }
     }
 
     /* Send keys */
-    if( strlen( command ) != 0 ) {
+    if( strlen( command ) != 0 )
+    {
         if( command[ strlen(command) - 1] == '+' ) pop_char( command );
         gtk_label_set_text( label_grab, command );
         send_key( command );

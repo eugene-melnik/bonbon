@@ -14,11 +14,9 @@
 #define USERNAME_CFG                            "username"
 #define HOSTNAME_CFG                            "hostname"
 #define PASSWORD_CFG                            "password"
-
 #define DEFAULT_X_DISPLAY                       ":0.0"
 #define DEFAULT_SEND_DELAY                      100000
 
-/* Handlers */
 int load_config( const char* filename );
 int save_config( const char* filename );
 

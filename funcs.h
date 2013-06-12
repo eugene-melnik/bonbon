@@ -1,19 +1,17 @@
 #ifndef FUNCS_H_INCLUDED
 #define FUNCS_H_INCLUDED
 
-/* Headers */
 #include <libssh/libssh.h>
 #include <gtk/gtk.h>
 
-/* Global constants */
+/* Global */
 #define COMMAND_BUFFER_SIZE                     1024 * sizeof(char)
 #define RESULT_BUFFER_SIZE                      4096 * sizeof(char)
 
-/* Global variable */
 typedef struct {
-    char*         hostname;         /* host name or computer's IP */
-    char*         username;         /* user's name on remote computer */
-    char*         password;         /* user's password */
+    char*         hostname;
+    char*         username;
+    char*         password;
 
     char*         x_display;
     int           send_delay;
@@ -27,18 +25,13 @@ typedef struct {
     ssh_session   session;
 } global_t;
 
-/* Global functions */
 void show_in_statusbar( const char* message );
 void show_in_statusbar_ext( const char* format, const char* value );
-
 void entry_edited( GtkEntry* entry, char** destination );
 void entry_edited_dig( GtkEntry* entry, int* destination );
-
 void combo_changed( GtkComboBoxText* combobox, char** destination );
 void check_button_activate( GtkCheckButton* button, int* destination );
-
 void remove_children( GtkContainer* container );
-
 int isempty( const char* string );
 void pop_char( char* string );
 

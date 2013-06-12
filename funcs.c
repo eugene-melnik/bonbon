@@ -7,19 +7,11 @@
 
 extern global_t global;
 
-/*************************************************************************************************
- *  Show text in statusbar.                                                                       *
-  *************************************************************************************************/
-
 void show_in_statusbar( const char* message )
 {
     gtk_statusbar_pop( global.statusbar, 0 );
     gtk_statusbar_push( global.statusbar, 0, message );
 }
-
-/*************************************************************************************************
- *  Show text in statusbar. Extended version.                                                     *
-  *************************************************************************************************/
 
 void show_in_statusbar_ext( const char* format, const char* value )
 {
@@ -28,10 +20,6 @@ void show_in_statusbar_ext( const char* format, const char* value )
     show_in_statusbar( message );
 }
 
-/*************************************************************************************************
- *  Entry handler (for text).                                                                     *
-  *************************************************************************************************/
-
 void entry_edited( GtkEntry* entry, char** destination )
 {
     if( *destination != NULL ) free( *destination );
@@ -39,19 +27,11 @@ void entry_edited( GtkEntry* entry, char** destination )
     *destination = strdup( gtk_entry_buffer_get_text( entry_buffer ) );
 }
 
-/*************************************************************************************************
- *  Entry handler (for numbers).                                                                  *
-  *************************************************************************************************/
-
 void entry_edited_dig( GtkEntry* entry, int* destination )
 {
     GtkEntryBuffer* entry_buffer = gtk_entry_get_buffer( entry );
     *destination = atoi( gtk_entry_buffer_get_text( entry_buffer ) );
 }
-
-/*************************************************************************************************
- *  Comboes handler.                                                                              *
-  *************************************************************************************************/
 
 void combo_changed( GtkComboBoxText* combobox, char** destination )
 {
@@ -60,25 +40,19 @@ void combo_changed( GtkComboBoxText* combobox, char** destination )
     if( strcmp( *destination, "-" ) == 0 ) *destination = NULL;
 }
 
-/*************************************************************************************************
- *  Check button handler.                                                                         *
-  *************************************************************************************************/
-
 void check_button_activate( GtkCheckButton* button, int* destination )
 {
     *destination = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON( button ) );
 }
 
-/*************************************************************************************************
- *  Remove all child widgets in GtkContainer.                                                     *
-  *************************************************************************************************/
-
 void remove_children( GtkContainer* container )
 {
     GList* children = gtk_container_get_children( GTK_CONTAINER( container ) );
 
-    if( children != NULL ) {
-        for( GList* iter = children; iter != NULL; iter = g_list_next( iter ) ) {
+    if( children != NULL )
+    {
+        for( GList* iter = children; iter != NULL; iter = g_list_next( iter ) )
+        {
             gtk_widget_destroy( GTK_WIDGET( iter->data ) );
         }
 
@@ -86,26 +60,22 @@ void remove_children( GtkContainer* container )
     }
 }
 
-/*************************************************************************************************
- *  Is chars array is empty.                                                                      *
-  *************************************************************************************************/
-
 int isempty( const char* string )
 {
-    if( string[0] == '\0' ) {
+    if( string[0] == '\0' )
+    {
         return TRUE;
-    } else {
+    }
+    else
+    {
         return FALSE;
     }
 }
 
-/*************************************************************************************************
- *  Remove last char from the string.                                                             *
-  *************************************************************************************************/
-
 void pop_char( char* string )
 {
-    if( strlen(string) != 0 ) {
+    if( strlen(string) != 0 )
+    {
         string[ strlen(string) - 1 ] = '\0';
     }
 }
