@@ -1,10 +1,8 @@
 CC = gcc
+LD = g++
 RM = rm -rf
-STRIP = strip
-CFLAGS = -Wall -std=gnu11 -g
-CFLAGS += $(shell pkg-config gtk+-3.0 --cflags)
-LDFLAGS = -lssh
-LDFLAGS += $(shell pkg-config gtk+-3.0 gmodule-2.0 --libs)
+CFLAGS = -g -Wall -std=gnu11 $(shell pkg-config gtk+-3.0 --cflags)
+LDFLAGS = -lssh $(shell pkg-config gtk+-3.0 gmodule-2.0 --libs)
 
 SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c page_shell.c \
           preferences.c grab_keyboard.c config.c aboutdialog.c
@@ -12,19 +10,21 @@ SOURCES = bonbon.c funcs.c connection.c page_connection.c page_keyboard.c page_s
 OBJS = bonbon.o funcs.o connection.o page_connection.o page_keyboard.o page_shell.o \
        preferences.o grab_keyboard.o config.o aboutdialog.o
 
+UI = ui.h
+
 EXECUTABLE_DBG = bonbon_dbg
 EXECUTABLE = bonbon
 
-all: debug
+all: release
 
 debug: $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $(EXECUTABLE_DBG)
+	$(LD) $(LDFLAGS) $(OBJS) -g --output $(EXECUTABLE_DBG)
 
 release: $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -O2 -s -o $(EXECUTABLE)
+	$(LD) $(LDFLAGS) $(OBJS) -O2 -s --output $(EXECUTABLE)
 
-bonbon.o: bonbon.c bonbon.h funcs.h connection.h page_connection.h page_keyboard.h page_shell.h \
-          preferences.h errors.h
+bonbon.o: bonbon.c bonbon.h ui.h funcs.h connection.h page_connection.h page_keyboard.h \
+          page_shell.h preferences.h errors.h
 	$(CC) $(CFLAGS) -c bonbon.c
 
 funcs.o: funcs.c funcs.h strings.h
@@ -54,6 +54,9 @@ config.o: config.c config.h errors.h funcs.h strings.h
 aboutdialog.o: aboutdialog.c aboutdialog.h bonbon.h
 	$(CC) $(CFLAGS) -c aboutdialog.c
 
+ui.h: ui.glade
+	echo "const gchar* ui = `sed -r 's/^[[:space:]]*//;s/\"/\\\\\"/g;s/(^.*$$)/\"&\"/' ui.glade` ;" > $(UI)
+
 clean:
-	$(RM) $(OBJS) $(EXECUTABLE) $(EXECUTABLE_DBG)
+	$(RM) $(OBJS) $(UI) $(EXECUTABLE) $(EXECUTABLE_DBG)
 

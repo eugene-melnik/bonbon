@@ -8,43 +8,52 @@
 #include "errors.h"
 #include "funcs.h"
 #include "bonbon.h"
+#include "ui.h"
+
+#include <gtk/gtk.h>
+#include <string.h>
 
 global_t global;
 
-/*************************************************************************************************
- * Entry point.                                                                                   *
- **************************************************************************************************
- *  Initializing, loading interface from file and connecting signals.                             *
-  *************************************************************************************************/
+void show_version()
+{
+    g_print( "Program: %s\n"
+             "Version: %s\n", PROGRAM_NAME, PROGRAM_VERSION );
+}
+
+void show_using()
+{
+    g_print( "Using: bonbon [-v||--version]\n"
+             "\t-v || --version\tshow bonbon version and exit\n" );
+}
 
 int main( int argc, char** argv )
 {
-    /* Write version information */
-    if( argc == 2 ) {
-        if( ( strcmp( argv[1], "-v" ) == 0 ) ||
-            ( strcmp( argv[1], "--version" ) == 0 ) ) {
-            g_print( "Program: %s\nVersion: %s\n", PROGRAM_NAME, PROGRAM_VERSION );
-        } else {
-            g_print( "Error! Unknown argument: \"%s\"\n", argv[1] );
+    if( argc == 2 )
+    {
+        if( strcmp( argv[1], "-v" ) == 0 || strcmp( argv[1], "--version" ) == 0 )
+        {
+            show_version();
+            return( SUCCESS );
         }
-
+    }
+    else if( argc != 1 )
+    {
+        g_print( "Error! Unknown argument: \"%s\"\n", argv[1] );
+        show_using();
         return( SUCCESS );
     }
 
-    /* GTK initialization */
     gdk_threads_init();
     gtk_init( &argc, &argv );
-
-    /* Loading widows forms from XML (Glade) file */
     GtkBuilder* builder = gtk_builder_new();
 
-    if( !gtk_builder_add_from_file( builder, GLADE_FILE_NAME, &global.error_msg ) ) {
+    if( !gtk_builder_add_from_string( builder, ui, -1, &global.error_msg ) ) {
         g_warning( "%s\n", global.error_msg->message );
         global.error_msg = NULL;
         return( BUILDER_LOAD_FAIL );
     }
 
-    /* Bindings objects */
     page_connection_bind( builder );
     page_keyboard_bind( builder );
     page_shell_bind( builder );
@@ -52,10 +61,7 @@ int main( int argc, char** argv )
     preferences_window_bind( builder );
     aboutdialog_bind( builder );
 
-    /* Signals */
     gtk_builder_connect_signals( builder, NULL );
-
-    /* Starting */
     show_in_statusbar( READY_MESSAGE );
     g_object_unref( builder );
     gtk_main();
