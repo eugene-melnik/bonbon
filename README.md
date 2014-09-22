@@ -3,12 +3,12 @@
 ===
 
 ##### Packages needed for assembly:
- * gtk+ v3 (libgtk-3-dev in Debian);
- * libssh (libssh-dev).
+ * gtk+ v3 (libgtk-3-dev in Debian)
+ * libssh (libssh-dev)
 
 ##### Packages needed for work:
- * openssh-server;
- * xdotool.
+ * openssh-server
+ * xdotool
 ===
 
 ##### Screenshots:
