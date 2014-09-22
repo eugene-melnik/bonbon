@@ -3,6 +3,13 @@
 
 ===
 
+**Language:** C++
+
+**Framework:** GTK+ 3.0
+
+**IDE:** Code::Blocks + Glade
+
+
 ##### Packages needed for assembly:
  * gtk+ v3 (libgtk-3-dev in Debian)
  * libssh (libssh-dev)
