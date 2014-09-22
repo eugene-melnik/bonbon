@@ -3,7 +3,7 @@
 
 ===
 
-**Language:** C++
+**Language:** C
 
 **Framework:** GTK+ 3.0
 
